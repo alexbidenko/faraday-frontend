@@ -27,11 +27,8 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          build-args: |
-            SITE_ENVIRONMENT=production
-            NUXT_DADATA_TOKEN=${{ secrets.NUXT_DADATA_TOKEN }}
           push: true
-          tags: ghcr.io/dtmskin/site/application:latest
+          tags: ghcr.io/alexbidenko1998/faraday-frontend/application:latest
 
   build-nginx:
     runs-on: ubuntu-22.04
@@ -55,7 +52,7 @@ jobs:
         with:
           context: nginx
           push: true
-          tags: ghcr.io/dtmskin/site/nginx:latest
+          tags: ghcr.io/alexbidenko1998/faraday-frontend/nginx:latest
 
   deploy:
     runs-on: ubuntu-22.04
@@ -76,11 +73,11 @@ jobs:
       - name: Install SSH key
         run: |
           mkdir -p ~/.ssh/
-          ssh-keyscan -t rsa ${{ secrets.PROD_SSH_HOST }} >> ~/.ssh/known_hosts
-          echo "${{ secrets.PROD_SSH_KEY }}" > ~/.ssh/id_rsa
+          ssh-keyscan -t rsa ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/id_rsa
           chmod 400 ~/.ssh/id_rsa
 
       - name: Deploy 🚀
-        run: docker stack deploy --prune --with-registry-auth -c docker-compose.prod.yml dtmskin-frontend-production
+        run: docker stack deploy --prune --with-registry-auth -c docker-compose.yml faraday-frontend
         env:
-          DOCKER_HOST: ssh://${{ secrets.PROD_SSH_USER }}@${{ secrets.PROD_SSH_HOST }}
+          DOCKER_HOST: ssh://${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}
