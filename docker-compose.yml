@@ -7,6 +7,9 @@ services:
       - 4000
     volumes:
       - nginx-cache:/data/nginx/cache
+    networks:
+      - server
+      - internal
     deploy:
       replicas: 1
       update_config:
@@ -19,6 +22,8 @@ services:
     image: ghcr.io/alexbidenko1998/faraday-frontend/application:latest
     expose:
       - 3000
+    networks:
+      - internal
     deploy:
       replicas: 1
       update_config:
@@ -29,3 +34,8 @@ services:
 
 volumes:
   nginx-cache:
+
+networks:
+  server:
+    external: true
+  internal:
