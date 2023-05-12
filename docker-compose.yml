@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   nginx:
-    image: ghcr.io/alexbidenko1998/faraday-frontend/nginx:stage
+    image: ghcr.io/alexbidenko1998/faraday-frontend/nginx:latest
     expose:
       - 4000
     volumes:
@@ -16,7 +16,7 @@ services:
         condition: on-failure
 
   application:
-    image: ghcr.io/alexbidenko1998/faraday-frontend/application:stage
+    image: ghcr.io/alexbidenko1998/faraday-frontend/application:latest
     expose:
       - 3000
     deploy:
