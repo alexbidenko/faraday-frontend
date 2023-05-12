@@ -1,0 +1,54 @@
+@use "sass:map";
+
+$breakpoints: (
+  "xs": 375,
+  "sm": 768,
+  "md": 1024,
+  "lg": 1240,
+  "xl": 1440,
+  "xxl": 1920,
+  "xxxl": 2560,
+);
+
+@mixin mq($maxWidth, $minWidth: false) {
+  @if map.has-key($breakpoints, $maxWidth) {
+    $maxWidth: map.get($breakpoints, $maxWidth);
+
+    @if ($minWidth != false) and map.has-key($breakpoints, $minWidth) {
+      $minWidth: map.get($breakpoints, $minWidth) + "px";
+
+      @media (max-width: ($maxWidth - 1px)) and (min-width: $minWidth) {
+        @content;
+      }
+    } @else {
+      @media (max-width: ($maxWidth - 1px)) {
+        @content;
+      }
+    }
+  }
+  @else if($maxWidth == "none") and map.has-key($breakpoints, $minWidth) {
+    $minWidth: map.get($breakpoints, $minWidth);
+
+    @media (min-width: ($minWidth - 1px)) {
+      @content;
+    }
+  }
+}
+
+@mixin visibility-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  opacity: 0;
+  white-space: nowrap;
+  clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+@mixin columns($count, $additionalGapCount: 0) {
+  width: calc(((100vw + var(--grid-gap) - var(--container-padding) * 2) / 12) * $count + var(--grid-gap) * ($additionalGapCount - 1));
+}

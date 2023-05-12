@@ -1,0 +1,31 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: ghcr.io/dtmskin/site/nginx:stage
+    expose:
+      - 4000
+    volumes:
+      - nginx-cache:/data/nginx/cache
+    deploy:
+      replicas: 1
+      update_config:
+        failure_action: rollback
+        order: start-first
+      restart_policy:
+        condition: on-failure
+
+  application:
+    image: ghcr.io/dtmskin/site/application:stage
+    expose:
+      - 3000
+    deploy:
+      replicas: 1
+      update_config:
+        failure_action: rollback
+        order: start-first
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  nginx-cache:

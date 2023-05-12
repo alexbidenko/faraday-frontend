@@ -1,0 +1,19 @@
+:root {
+  --container-padding: 140px;
+  --grid-gap: 40px;
+
+  @include mq("xl") {
+    --container-padding: 92px;
+    --grid-gap: 20px;
+  }
+
+  @include mq("sm") {
+    --container-padding: 16px;
+    --grid-gap: 16px;
+  }
+}
+
+.container {
+  padding-left: var(--container-padding);
+  padding-right: var(--container-padding);
+}
