@@ -4,7 +4,7 @@ import image2 from '~/assets/images/about_image_2.jpg';
 </script>
 
 <template>
-  <section class="sectionAbout container">
+  <section id="about" class="sectionAbout container">
     <div class="sectionAbout__content">
       <h2 class="sectionAbout__title">
         О нас

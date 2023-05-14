@@ -1,13 +1,12 @@
 <script lang="ts" setup>
-import {ButtonHTMLAttributes} from 'vue';
+import type {ButtonHTMLAttributes} from 'vue';
 
-interface Props extends ButtonHTMLAttributes {
-  size?: 'm' | 'l';
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
+interface Props extends /* @vue-ignore */ ButtonHTMLAttributes {
+  size?: 's' | 'm' | 'l';
 }
 
-const props = withDefaults(defineProps<{
-  size?: 'm' | 'l';
-}>(), {size: 'm'});
+const props = withDefaults(defineProps<Props>(), {size: 'm'});
 </script>
 
 <template>
@@ -37,6 +36,12 @@ const props = withDefaults(defineProps<{
   &_l {
     height: 120px;
     padding: 0 100px;
+  }
+
+  &_s {
+    font-size: 24px;
+    height: 74px;
+    padding: 0 94px;
   }
 }
 </style>

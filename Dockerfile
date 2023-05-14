@@ -11,6 +11,16 @@ RUN pnpm install --frozen-lockfile
 
 FROM base as build
 
+ARG SMTP_HOST
+ARG SMTP_PORT
+ARG SMTP_USER
+ARG SMTP_PASSWORD
+
+ENV SMTP_HOST=$SMTP_HOST
+ENV SMTP_PORT=$SMTP_PORT
+ENV SMTP_USER=$SMTP_USER
+ENV SMTP_PASSWORD=$SMTP_PASSWORD
+
 WORKDIR /app
 COPY --from=dependencies /app/node_modules ./node_modules
 COPY . .

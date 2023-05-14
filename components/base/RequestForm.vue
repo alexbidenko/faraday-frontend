@@ -1,5 +1,34 @@
 <script lang="ts" setup>
 import background from '~/assets/images/form_background.jpg';
+
+const request = useRequest();
+
+const name = ref('');
+const phone = ref('');
+const message = ref('');
+const files = ref<File[]>([]);
+
+const isValid = computed(() => !!(name.value && phone.value && message.value));
+
+const onFileInputChange = (event: InputEvent) => {
+  const target = event.target as HTMLInputElement;
+  const fileList = target.files || event.dataTransfer?.files;
+  if (!fileList?.length) return;
+
+  files.value = Array.from(fileList);
+};
+
+const onSubmit = () => {
+  if (!isValid.value) return;
+
+  const formData = new FormData();
+  formData.append('name', name.value);
+  formData.append('phone', phone.value);
+  formData.append('message', message.value);
+  files.value.forEach((el) => formData.append('files', el, el.name));
+
+  request('/api/email', {body: formData, method: 'POST'});
+};
 </script>
 
 <template>
@@ -12,10 +41,27 @@ import background from '~/assets/images/form_background.jpg';
     />
 
     <div class="baseRequestForm__content">
-      <form class="baseRequestForm__form">
+      <form @submit.prevent="onSubmit" class="baseRequestForm__form">
         <h3 class="baseRequestForm__title">
           Остались вопросы?
         </h3>
+
+        <div class="baseRequestForm__fields">
+          <BaseInput v-model="name" autocomplete="name" placeholder="Как к вам обращаться?" />
+          <BaseInput
+            v-model="phone"
+            type="tel"
+            autocomplete="tel"
+            inputmode="tel"
+            placeholder="+7 (999) 999-99-99"
+          />
+          <BaseTextArea v-model="message" placeholder="Напишите дополнительные пожелания" />
+          <input @change="onFileInputChange" type="file" multiple>
+        </div>
+
+        <BaseButton type="submit" size="s" class="baseRequestForm__submit">
+          Оставить заявку
+        </BaseButton>
       </form>
     </div>
 
@@ -65,6 +111,17 @@ import background from '~/assets/images/form_background.jpg';
     text-align: center;
     margin-top: 0;
     margin-bottom: 78px;
+  }
+
+  &__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  &__submit {
+    display: block;
+    margin: 48px auto 0;
   }
 
   &__additional {

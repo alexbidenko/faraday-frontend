@@ -9,7 +9,14 @@ export default defineNuxtConfig({
     '@nuxtjs/google-fonts',
     '@nuxt/image-edge',
     'nuxt-svgo',
+    '@nuxtjs/robots',
   ],
+  runtimeConfig: {
+    smtpHost: process.env.SMTP_HOST,
+    smtpPort: +process.env.SMTP_PORT || undefined,
+    smtpUser: process.env.SMTP_USER,
+    smtpPassword: process.env.SMTP_PASSWORD,
+  },
   vite: {css: {preprocessorOptions: {scss: {additionalData: '@import "@/assets/styles/mixins.scss";'}}}},
   hooks: {
     // https://github.com/nuxt/nuxt/issues/18376
@@ -21,6 +28,10 @@ export default defineNuxtConfig({
   },
   routeRules: {'/': {static: true}},
   googleFonts: {families: {Inter: {wght: [400, 500, 600, 700]}}},
+  security: {
+    csrf: true,
+    xssValidator: false,
+  },
   image: {
     domains: [...(process.env.NODE_ENV === 'development' ? [developmentOrigin] : [])],
     alias: {...(process.env.NODE_ENV === 'development' ? {'_nuxt': `${developmentOrigin}/_nuxt`} : {})},

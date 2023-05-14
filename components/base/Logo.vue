@@ -9,7 +9,7 @@
   position: relative;
   aspect-ratio: 1 / 1;
 
-  &__image {
+  & &__image {
     position: absolute;
     width: 108%;
     height: auto;

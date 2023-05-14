@@ -27,6 +27,11 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
+          build-args: |
+            SMTP_HOST=${{ secrets.SMTP_HOST }}
+            SMTP_PORT=${{ secrets.SMTP_PORT }}
+            SMTP_USER=${{ secrets.SMTP_USER }}
+            SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}
           push: true
           tags: ghcr.io/alexbidenko1998/faraday-frontend/application:latest
 

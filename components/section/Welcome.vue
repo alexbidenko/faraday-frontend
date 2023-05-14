@@ -20,9 +20,11 @@ import background from '~/assets/images/welcome_section_background.jpg';
         <p class="sectionWelcome__slogan">
           «Стоп Износ»
         </p>
-        <BaseButton size="l">
-          Оставить заявку
-        </BaseButton>
+        <NuxtLink to="/#request">
+          <BaseButton size="l">
+            Оставить заявку
+          </BaseButton>
+        </NuxtLink>
       </div>
 
       <div class="sectionWelcome__banner">
