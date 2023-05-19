@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import hardox from '~/assets/icons/hardox.svg?url';
+import verticalHardox from '~/assets/icons/vertical_hardox.svg?url';
 import background from '~/assets/images/welcome_section_background.jpg';
 </script>
 
@@ -28,15 +30,19 @@ import background from '~/assets/images/welcome_section_background.jpg';
       </div>
 
       <div class="sectionWelcome__banner">
-        <SvgoHardox class="sectionWelcome__hardox" filled />
+        <picture>
+          <source media="(max-width: 1024px)" :srcset="verticalHardox">
+          <img :src="hardox" alt="Надпись HARDOX" class="sectionWelcome__hardox">
+        </picture>
       </div>
     </div>
   </section>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sectionWelcome {
   height: 100vh;
+  overflow: hidden;
 
   &__background {
     display: block;
@@ -68,6 +74,10 @@ import background from '~/assets/images/welcome_section_background.jpg';
   &__info {
     padding-top: 143px;
     flex: 1;
+
+    @include mq("xl") {
+      padding-top: 140px;
+    }
   }
 
   &__title {
@@ -77,6 +87,11 @@ import background from '~/assets/images/welcome_section_background.jpg';
     color: #111112;
     margin-top: 0;
     margin-bottom: 32px;
+
+    @include mq("xl") {
+      font-size: 48px;
+      line-height: 58px;
+    }
   }
 
   &__slogan {
@@ -85,11 +100,21 @@ import background from '~/assets/images/welcome_section_background.jpg';
     color: #111112;
     margin-top: 0;
     margin-bottom: 86px;
+
+    @include mq("xl") {
+      font-size: 24px;
+      line-height: 29px;
+      margin-bottom: 84px;
+    }
   }
 
   &__banner {
     padding-top: 60px;
     flex: 1;
+
+    @include mq("xl") {
+      padding-top: 42px;
+    }
   }
 
   &__hardox {
@@ -97,6 +122,17 @@ import background from '~/assets/images/welcome_section_background.jpg';
     display: block;
     width: 668px;
     height: 188px;
+
+    @include mq("xxl") {
+      width: 476px;
+      height: 134px;
+    }
+
+    @include mq("md") {
+      width: 141px;
+      height: 503px;
+      transform: translateX(calc(24px + var(--container-padding)));
+    }
   }
 }
 </style>

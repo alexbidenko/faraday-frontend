@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<Props>(), {size: 'm'});
   </button>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .baseButton {
   background-color: #111112;
   border-radius: 32px;
@@ -28,6 +28,13 @@ const props = withDefaults(defineProps<Props>(), {size: 'm'});
   cursor: pointer;
   transition: color 0.3s ease, background-color 0.3s ease;
 
+  @include mq("xxl") {
+    border-radius: 24px;
+    height: 65px;
+    font-size: 24px;
+    padding: 0 51px;
+  }
+
   &:hover {
     background-color: #F2F2F2;
     color: #111112;
@@ -36,6 +43,11 @@ const props = withDefaults(defineProps<Props>(), {size: 'm'});
   &_l {
     height: 120px;
     padding: 0 100px;
+
+    @include mq("xxl") {
+      height: 93px;
+      padding: 0 70px;
+    }
   }
 
   &_s {

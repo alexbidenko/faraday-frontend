@@ -36,17 +36,31 @@ import image2 from '~/assets/images/about_image_2.jpg';
   </section>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .sectionAbout {
   display: flex;
   align-items: center;
   gap: var(--grid-gap);
+  overflow: hidden;
+
+  @include mq("md") {
+    align-items: flex-start;
+    flex-direction: column;
+  }
 
   &__content {
     @include columns(5);
 
     padding-top: 114px;
     padding-bottom: 125px;
+
+    @include mq("xl") {
+      padding-bottom: 94px;
+    }
+
+    @include mq("md") {
+      width: 100%;
+    }
   }
 
   &__title {
@@ -56,6 +70,11 @@ import image2 from '~/assets/images/about_image_2.jpg';
     color: #111112;
     margin-top: 0;
     margin-bottom: 40px;
+
+    @include mq("xxl") {
+      font-size: 48px;
+      line-height: 58px;
+    }
   }
 
   &__description {
@@ -63,6 +82,11 @@ import image2 from '~/assets/images/about_image_2.jpg';
     line-height: 39px;
     color: #111112;
     margin: 0;
+
+    @include mq("xxl") {
+      font-size: 24px;
+      line-height: 30px;
+    }
   }
 
   &__images {
@@ -71,17 +95,36 @@ import image2 from '~/assets/images/about_image_2.jpg';
     gap: 19px;
     justify-content: flex-end;
 
+    @include mq("xl") {
+      gap: 20px;
+    }
+
+    @include mq("md") {
+      margin-left: auto;
+    }
+
     img:nth-child(1) {
       width: 411px;
       height: 411px;
       display: block;
       margin-top: 57px;
+
+      @include mq("xxl") {
+        width: 280px;
+        height: 280px;
+        margin-top: 79px;
+      }
     }
 
     img:nth-child(2) {
       width: 401px;
       height: 401px;
       display: block;
+
+      @include mq("xxl") {
+        width: 280px;
+        height: 280px;
+      }
     }
   }
 }

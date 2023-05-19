@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import type {TextareaHTMLAttributes} from 'vue';
-import {defineModel} from 'vue';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props extends /* @vue-ignore */ TextareaHTMLAttributes {}
@@ -13,7 +12,7 @@ const modelValue = defineModel();
   <textarea v-model="modelValue" class="baseTextArea" />
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .baseTextArea {
   min-height: 164px;
   border: 2px solid #111112;

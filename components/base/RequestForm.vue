@@ -6,26 +6,23 @@ const request = useRequest();
 const name = ref('');
 const phone = ref('');
 const message = ref('');
-const files = ref<File[]>([]);
+const selectedFiles = ref<File[]>([]);
+const isValidatedByRecaptcha = ref(false);
 
 const isValid = computed(() => !!(name.value && phone.value && message.value));
 
-const onFileInputChange = (event: InputEvent) => {
-  const target = event.target as HTMLInputElement;
-  const fileList = target.files || event.dataTransfer?.files;
-  if (!fileList?.length) return;
-
-  files.value = Array.from(fileList);
+const onFilesSelect = (files: File[]) => {
+  selectedFiles.value = files;
 };
 
 const onSubmit = () => {
-  if (!isValid.value) return;
+  if (!isValid.value || !isValidatedByRecaptcha.value) return;
 
   const formData = new FormData();
   formData.append('name', name.value);
   formData.append('phone', phone.value);
   formData.append('message', message.value);
-  files.value.forEach((el) => formData.append('files', el, el.name));
+  selectedFiles.value.forEach((el) => formData.append('files', el, el.name));
 
   request('/api/email', {body: formData, method: 'POST'});
 };
@@ -42,24 +39,43 @@ const onSubmit = () => {
 
     <div class="baseRequestForm__content">
       <form @submit.prevent="onSubmit" class="baseRequestForm__form">
-        <h3 class="baseRequestForm__title">
+        <h3 class="baseRequestForm__question">
           Остались вопросы?
         </h3>
 
         <div class="baseRequestForm__fields">
-          <BaseInput v-model="name" autocomplete="name" placeholder="Как к вам обращаться?" />
+          <BaseInput
+            v-model="name"
+            icon="profile"
+            autocomplete="name"
+            placeholder="Как к вам обращаться?"
+          />
           <BaseInput
             v-model="phone"
+            icon="phone"
             type="tel"
             autocomplete="tel"
             inputmode="tel"
             placeholder="+7 (999) 999-99-99"
           />
           <BaseTextArea v-model="message" placeholder="Напишите дополнительные пожелания" />
-          <input @change="onFileInputChange" type="file" multiple>
+          <BaseAttachFiles
+            @change="onFilesSelect"
+            placeholder="Загрузите файл"
+          >
+            <template #hint>
+              Можем обсудить условия выполнения индивидуального заказа
+              (прикрепите чертёж к заявке звонка)
+            </template>
+          </BaseAttachFiles>
         </div>
 
-        <BaseButton type="submit" size="s" class="baseRequestForm__submit">
+        <BaseButton
+          :disabled="!isValid"
+          type="submit"
+          size="s"
+          class="baseRequestForm__submit"
+        >
           Оставить заявку
         </BaseButton>
       </form>
@@ -67,11 +83,30 @@ const onSubmit = () => {
 
     <div class="baseRequestForm__additional">
       <BaseLogo class="baseRequestForm__logo" />
+      <h2 class="baseRequestForm__title">
+        Контакты
+      </h2>
+      <div class="baseRequestForm__contacts">
+        <a :href="`tel:${CONSTANTS.phone}`" class="baseRequestForm__link">
+          <SvgoSimplePhone />
+        </a>
+        <a :href="`mailto:${CONSTANTS.email}`" class="baseRequestForm__link">
+          <SvgoSimpleEmail />
+        </a>
+        <a
+          :href="CONSTANTS.whatsapp"
+          target="_blank"
+          rel="nofollow noreferrer noopener"
+          class="baseRequestForm__link"
+        >
+          <SvgoSimpleWhatsapp />
+        </a>
+      </div>
     </div>
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .baseRequestForm {
   position: relative;
   display: flex;
@@ -90,6 +125,21 @@ const onSubmit = () => {
     position: relative;
     padding-top: 86px;
     padding-bottom: 138px;
+
+    @include mq("xxl") {
+      padding-left: var(--grid-gap);
+    }
+
+    @include mq("md") {
+      width: 100%;
+      padding-top: 84px;
+      padding-bottom: 53px;
+    }
+
+    @include mq("sm") {
+      padding-left: 16px;
+      padding-right: 16px;
+    }
   }
 
   &__form {
@@ -102,9 +152,22 @@ const onSubmit = () => {
     backdrop-filter: blur(39px);
     border-radius: 32px;
     padding: 48px 40px;
+
+    @include mq("xxl") {
+      @include columns(6, 1);
+    }
+
+    @include mq("md") {
+      @include columns(10);
+    }
+
+    @include mq("sm") {
+      width: 100%;
+      padding: 48px 12px;
+    }
   }
 
-  &__title {
+  &__question {
     font-size: 32px;
     line-height: 39px;
     color: #111112;
@@ -133,10 +196,47 @@ const onSubmit = () => {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+
+    @include mq("md") {
+      display: none;
+    }
   }
 
   &__logo {
     width: 207px;
+  }
+
+  &__title {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 48px;
+    color: #FFFFFF;
+    margin-top: 80px;
+    margin-bottom: 77px;
+  }
+
+  &__contacts {
+    display: flex;
+    align-items: center;
+    gap: 94px;
+  }
+
+  &__link {
+    width: 48px;
+    height: 48px;
+    color: #FFFFFF;
+
+    &:hover svg {
+      transform: translateY(-10px);
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+      margin-bottom: 0;
+      transition: transform 0.3s ease;
+    }
   }
 }
 </style>

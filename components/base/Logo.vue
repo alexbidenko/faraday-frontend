@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .baseLogo {
   position: relative;
   aspect-ratio: 1 / 1;

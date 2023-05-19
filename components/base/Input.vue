@@ -1,12 +1,17 @@
 <script lang="ts" setup>
 import type {InputHTMLAttributes} from 'vue';
-import {defineModel} from 'vue';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
-interface Props extends /* @vue-ignore */ InputHTMLAttributes {}
+enum Icon {
+  profile = 'profile',
+  phone = 'phone',
+}
+
+interface Props extends /* @vue-ignore */ InputHTMLAttributes {
+  icon?: Icon;
+}
 
 defineOptions({inheritAttrs: false});
-defineProps<Props>();
+const props = defineProps<Props>();
 const attrs = useAttrs();
 const modelValue = defineModel();
 
@@ -31,29 +36,42 @@ const onChange = (event: Event) => {
       class="baseInput__field"
       v-bind="inputAttrs"
     >
+    <SvgoSimpleProfile v-if="props.icon === Icon.profile" class="baseInput__icon" />
+    <SvgoSimplePhone v-else-if="props.icon === Icon.phone" class="baseInput__icon" />
   </label>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .baseInput {
-  font-size: 16px;
-  line-height: 26px;
+  display: flex;
+  align-items: center;
+  height: 46px;
+  padding-top: 2px;
+  padding-right: 12px;
+  border-bottom: 2px solid #111112;
 
   &__field {
     display: block;
     width: 100%;
-    height: 46px;
     color: #111112;
     border: none;
-    border-bottom: 2px solid #111112;
     background: none;
     padding-left: 12px;
-    padding-right: 48px;
+    padding-right: 12px;
+    font-size: 16px;
+    line-height: 26px;
     outline: none;
 
     &::placeholder {
       color: #858A8C;
     }
+  }
+
+  & &__icon {
+    width: 24px;
+    height: 24px;
+    display: block;
+    margin: 0;
   }
 }
 </style>

@@ -13,11 +13,13 @@ export default defineNuxtConfig({
   ],
   runtimeConfig: {
     smtpHost: process.env.SMTP_HOST,
-    smtpPort: +process.env.SMTP_PORT || undefined,
+    smtpPort: +(process.env.SMTP_PORT || 0) || undefined,
     smtpUser: process.env.SMTP_USER,
     smtpPassword: process.env.SMTP_PASSWORD,
+    recaptcha: {v3SiteKey: process.env.RECAPTCHA_SITE_KEY},
   },
   vite: {css: {preprocessorOptions: {scss: {additionalData: '@import "@/assets/styles/mixins.scss";'}}}},
+  // typescript: {tsConfig: {compilerOptions: {moduleResolution: 'bundler'}}},
   hooks: {
     // https://github.com/nuxt/nuxt/issues/18376
     'build:manifest': (manifest: Manifest) => {
@@ -47,4 +49,5 @@ export default defineNuxtConfig({
     ...(process.env.NODE_ENV === 'production' ? {ipx: {maxAge: 31536000}} : {}),
   },
   svgo: {autoImportPath: './assets/icons/'},
+  experimental: {componentIslands: true},
 });

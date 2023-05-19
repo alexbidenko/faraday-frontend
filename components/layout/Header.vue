@@ -46,8 +46,8 @@ onBeforeUnmount(() => {
     </div>
 
     <div class="layoutHeader__actions">
-      <a href="tel:+79112771967" class="layoutHeader__link">
-        +7 911 277-19-67
+      <a :href="`tel:${CONSTANTS.phone}`" class="layoutHeader__link">
+        {{ CONSTANTS.formattedPhone }}
       </a>
       <NuxtLink to="/#request">
         <BaseButton>
@@ -58,7 +58,7 @@ onBeforeUnmount(() => {
   </header>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .layoutHeader {
   position: fixed;
   width: 100%;
@@ -75,9 +75,31 @@ onBeforeUnmount(() => {
     padding-top: 6px;
   }
 
+  @include mq("xl") {
+    padding-top: 24px;
+    padding-bottom: 4px;
+
+    &_active {
+      padding-top: 4px;
+    }
+  }
+
+  @include mq("lg") {
+    padding-top: 22px;
+
+    &_active {
+      padding-top: 4px;
+    }
+  }
+
   &__logo {
     width: 96px;
     height: 96px;
+
+    @include mq("lg") {
+      width: 64px;
+      height: 64px;
+    }
   }
 
   &__link {
@@ -90,18 +112,39 @@ onBeforeUnmount(() => {
     &:hover {
       opacity: 0.7;
     }
+
+    @include mq("xxl") {
+      font-size: 16px;
+      line-height: 26px;
+    }
   }
 
   &__links {
     display: flex;
     align-items: center;
     gap: 48px;
+
+    @include mq("xl") {
+      gap: 34px;
+    }
+
+    @include mq("lg") {
+      display: none;
+    }
   }
 
   &__actions {
     display: flex;
     gap: 24px;
     align-items: center;
+
+    @include mq("xl") {
+      gap: 32px;
+    }
+
+    @include mq("md") {
+      display: none;
+    }
   }
 }
 </style>
