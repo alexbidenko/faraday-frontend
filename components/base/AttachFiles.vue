@@ -15,8 +15,8 @@ const selectedFiles = ref<{file: File; id: number}[]>([]);
 const isDragged = ref(false);
 const count = ref(0);
 
-const onChange = (event: InputEvent) => {
-  const files = (event.target as HTMLInputElement).files || event.dataTransfer?.files;
+const onChange = (event: Event) => {
+  const files = (event.target as HTMLInputElement).files || (event as InputEvent).dataTransfer?.files;
   if (files) {
     selectedFiles.value = selectedFiles.value.concat(
       [...files].map((file) => ({

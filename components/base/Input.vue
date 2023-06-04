@@ -7,7 +7,7 @@ enum Icon {
 }
 
 interface Props extends /* @vue-ignore */ InputHTMLAttributes {
-  icon?: Icon;
+  icon?: 'profile' | 'phone';
 }
 
 defineOptions({inheritAttrs: false});

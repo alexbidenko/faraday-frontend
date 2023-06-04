@@ -56,6 +56,8 @@ onBeforeUnmount(() => {
       </NuxtLink>
     </div>
   </header>
+
+  <LayoutSideMenu />
 </template>
 
 <style lang="scss" scoped>

@@ -5,7 +5,7 @@ import type {TextareaHTMLAttributes} from 'vue';
 interface Props extends /* @vue-ignore */ TextareaHTMLAttributes {}
 
 defineProps<Props>();
-const modelValue = defineModel();
+const modelValue = defineModel<string>();
 </script>
 
 <template>

@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     '@nuxt/image-edge',
     'nuxt-svgo',
     '@nuxtjs/robots',
+    '@pinia/nuxt',
   ],
   runtimeConfig: {
     smtpHost: process.env.SMTP_HOST,
@@ -19,7 +20,7 @@ export default defineNuxtConfig({
     recaptcha: {v3SiteKey: process.env.RECAPTCHA_SITE_KEY},
   },
   vite: {css: {preprocessorOptions: {scss: {additionalData: '@import "@/assets/styles/mixins.scss";'}}}},
-  // typescript: {tsConfig: {compilerOptions: {moduleResolution: 'bundler'}}},
+  typescript: {tsConfig: {compilerOptions: {moduleResolution: 'bundler'}}},
   hooks: {
     // https://github.com/nuxt/nuxt/issues/18376
     'build:manifest': (manifest: Manifest) => {
@@ -49,5 +50,13 @@ export default defineNuxtConfig({
     ...(process.env.NODE_ENV === 'production' ? {ipx: {maxAge: 31536000}} : {}),
   },
   svgo: {autoImportPath: './assets/icons/'},
-  experimental: {componentIslands: true},
+  pinia: {
+    autoImports: [
+      'defineStore',
+    ],
+  },
+  experimental: {
+    componentIslands: true,
+    watcher: 'chokidar',
+  },
 });

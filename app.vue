@@ -7,6 +7,8 @@
   <LayoutHeader />
 
   <NuxtPage />
+
+  <div id="modals" />
 </template>
 
 <style lang="scss" src="@/assets/styles/grid.scss"></style>
