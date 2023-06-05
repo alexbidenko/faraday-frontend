@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+import 'swiper/css';
+
+import {Swiper, SwiperSlide} from 'swiper/vue';
+
 import image1 from '~/assets/images/service_image_1.jpg';
 import image2 from '~/assets/images/service_image_2.jpg';
 import image3 from '~/assets/images/service_image_3.jpg';
@@ -11,8 +15,12 @@ import image4 from '~/assets/images/service_image_4.jpg';
       Услуги
     </h2>
 
-    <div class="sectionServices__container">
-      <div class="sectionServices__card">
+    <Swiper
+      :slides-per-view="1"
+      :space-between="12"
+      :breakpoints="{768: {enabled: false}}"
+    >
+      <SwiperSlide class="sectionServices__card">
         <div class="sectionServices__cardHeader">
           <NuxtImg
             :src="image1"
@@ -34,8 +42,8 @@ import image4 from '~/assets/images/service_image_4.jpg';
           <li>СТ40Х</li>
           <li>Другая по запросу</li>
         </ul>
-      </div>
-      <div class="sectionServices__card">
+      </SwiperSlide>
+      <SwiperSlide class="sectionServices__card">
         <div class="sectionServices__cardHeader">
           <NuxtImg
             :src="image2"
@@ -56,8 +64,8 @@ import image4 from '~/assets/images/service_image_4.jpg';
           <li>Механическая обработка</li>
           <li>Вальцовка</li>
         </ul>
-      </div>
-      <div class="sectionServices__card">
+      </SwiperSlide>
+      <SwiperSlide class="sectionServices__card">
         <div class="sectionServices__cardHeader">
           <NuxtImg
             :src="image3"
@@ -73,8 +81,8 @@ import image4 from '~/assets/images/service_image_4.jpg';
         <div class="sectionServices__cardContent">
           Выполнение индивидуальных заказов по присланным чертежам или в результате обсуждения
         </div>
-      </div>
-      <div class="sectionServices__card">
+      </SwiperSlide>
+      <SwiperSlide class="sectionServices__card">
         <div class="sectionServices__cardHeader">
           <NuxtImg
             :src="image4"
@@ -95,13 +103,18 @@ import image4 from '~/assets/images/service_image_4.jpg';
           <strong>Транспортными компаниями</strong>
           Другие регионы России
         </div>
-      </div>
-    </div>
+      </SwiperSlide>
+    </Swiper>
+    <div class="sectionServices__container" />
   </section>
 </template>
 
 <style lang="scss" scoped>
 .sectionServices {
+  @include mq("sm") {
+    padding: 0 !important;
+  }
+
   &__title {
     font-weight: 700;
     font-size: 64px;
@@ -111,8 +124,13 @@ import image4 from '~/assets/images/service_image_4.jpg';
     margin-bottom: 40px;
   }
 
-  &__container {
-    display: grid;
+  :deep(.swiper) {
+    @include mq("sm") {
+      padding: var(--container-padding);
+    }
+  }
+
+  :deep(.swiper-wrapper) {
     grid-template-columns: repeat(4, 1fr);
     gap: 40px;
 
@@ -124,10 +142,21 @@ import image4 from '~/assets/images/service_image_4.jpg';
       gap: 20px;
       grid-template-columns: repeat(2, 1fr);
     }
+
+    @include mq("sm") {
+      gap: 0;
+    }
+
+    @include mq("none", "sm") {
+      display: grid;
+    }
   }
 
   &__card {
-    width: 100%;
+    @include mq("none", "sm") {
+      width: 100% !important;
+      margin-right: 0 !important;
+    }
   }
 
   &__cardHeader {
@@ -164,6 +193,11 @@ import image4 from '~/assets/images/service_image_4.jpg';
       font-size: 2.4vw;
     }
 
+    @include mq("sm") {
+      font-size: 6vw;
+      line-height: 29px;
+    }
+
     &_dark {
       color: #111112;
     }
@@ -188,6 +222,10 @@ import image4 from '~/assets/images/service_image_4.jpg';
       display: block;
       font-weight: 700;
       margin-bottom: 12px;
+    }
+
+    &:is(ul) {
+      padding-left: 24px;
     }
   }
 }

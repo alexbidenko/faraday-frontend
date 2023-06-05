@@ -46,42 +46,41 @@ onBeforeUnmount(() => {
     class="layoutSideMenu"
   >
     <div class="layoutSideMenu__content">
-      <div class="layoutSideMenu__column">
-        <NuxtLink href="/#about" class="layoutSideMenu__link">
-          О нас
-        </NuxtLink>
-        <NuxtLink href="/#steel" class="layoutSideMenu__link">
-          Сталь HARDOX
-        </NuxtLink>
-        <NuxtLink href="/#services" class="layoutSideMenu__link">
-          Услуги
-        </NuxtLink>
-        <NuxtLink href="/#articles" class="layoutSideMenu__link">
-          Статьи
-        </NuxtLink>
-      </div>
-      <div class="layoutSideMenu__column">
-        <NuxtLink to="/" class="layoutSideMenu__link">
-          Главная
-        </NuxtLink>
-        <NuxtLink to="/about" class="layoutSideMenu__link">
-          О бренде
-        </NuxtLink>
-        <NuxtLink to="/contacts" class="layoutSideMenu__link">
-          Контакты
-        </NuxtLink>
-        <NuxtLink to="/faq" class="layoutSideMenu__link">
-          FAQ
-        </NuxtLink>
-        <NuxtLink to="/delivery-and-payment" class="layoutSideMenu__link">
-          Доставка и оплата
-        </NuxtLink>
-
-        <div class="layoutSideMenu__additional">
-          <button class="layoutSideMenu__subLink">
-            Аккаунт
-          </button>
+      <div class="layoutSideMenu__grid">
+        <div class="layoutSideMenu__column">
+          <NuxtLink href="/#about" class="layoutSideMenu__link">
+            О нас
+          </NuxtLink>
+          <NuxtLink href="/#steel" class="layoutSideMenu__link">
+            Сталь HARDOX
+          </NuxtLink>
+          <NuxtLink href="/#services" class="layoutSideMenu__link">
+            Услуги
+          </NuxtLink>
+          <NuxtLink href="/#articles" class="layoutSideMenu__link">
+            Статьи
+          </NuxtLink>
         </div>
+        <div class="layoutSideMenu__column">
+          <NuxtLink to="/" class="layoutSideMenu__link">
+            Статьи
+          </NuxtLink>
+          <NuxtLink to="/" class="layoutSideMenu__link">
+            О HARDOX
+          </NuxtLink>
+          <NuxtLink to="/" class="layoutSideMenu__link">
+            Марки стали
+          </NuxtLink>
+          <NuxtLink to="/" class="layoutSideMenu__link">
+            Все услуги
+          </NuxtLink>
+        </div>
+      </div>
+
+      <div class="layoutSideMenu__additional">
+        <a :href="`tel:${CONSTANTS.phone}`" class="layoutSideMenu__subLink">
+          {{ CONSTANTS.formattedPhone }}
+        </a>
       </div>
     </div>
   </BaseSidebar>
@@ -114,12 +113,20 @@ onBeforeUnmount(() => {
 
   &__content {
     padding: 94px 60px 48px;
-    display: flex;
-    gap: 34px;
     height: 100%;
+    display: flex;
+    flex-direction: column;
 
     @include mq("sm") {
       padding: 32px 16px;
+    }
+  }
+
+  &__grid {
+    display: flex;
+    gap: 34px;
+
+    @include mq("sm") {
       flex-direction: column;
       gap: 52px;
     }
@@ -166,10 +173,6 @@ onBeforeUnmount(() => {
     flex-direction: column;
     gap: 8px;
     margin-top: auto;
-
-    @include mq("sm") {
-      margin-top: 42px;
-    }
   }
 
   &__subLink  {

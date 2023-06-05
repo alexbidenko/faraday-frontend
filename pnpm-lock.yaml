@@ -26,6 +26,9 @@ dependencies:
   pinia:
     specifier: ^2.1.3
     version: 2.1.3(typescript@5.1.3)(vue@3.3.4)
+  swiper:
+    specifier: ^9.3.2
+    version: 9.3.2
 
 devDependencies:
   '@nuxtjs/google-fonts':
@@ -733,11 +736,11 @@ packages:
       - supports-color
     dev: false
 
-  /@nuxt/kit-edge@3.5.3-28095586.63cf6a5d:
-    resolution: {integrity: sha512-sF4U2fFyor8Ik/0nI6L0KCHtt682qyLoutpQuwZMCajJo1v5aP6ZXGPK2GK723Hesy3n7liIBMcoIMJP9i3rmg==}
+  /@nuxt/kit-edge@3.5.3-28099630.6163c5e3:
+    resolution: {integrity: sha512-L57El0KoMLnc2JX/43anCxtdQRO/9+wxgkBu+NZjfhLOGAHu67EggE/ME33FkTTOeTwjhI29eg9/xPSmdNJ/BQ==}
     engines: {node: ^14.18.0 || >=16.10.0}
     dependencies:
-      '@nuxt/schema': /@nuxt/schema-edge@3.5.3-28095586.63cf6a5d
+      '@nuxt/schema': /@nuxt/schema-edge@3.5.3-28099630.6163c5e3
       c12: 1.4.1
       consola: 3.1.0
       defu: 6.1.2
@@ -812,8 +815,8 @@ packages:
       - rollup
       - supports-color
 
-  /@nuxt/schema-edge@3.5.3-28095586.63cf6a5d:
-    resolution: {integrity: sha512-yV2HhQ+Eb2fVFFUh5OzRGmHlp6MZriU10Wooch9lX9fem4/QdEyipdbdzazikwzohD4Pm2KeA4npeVT3S0aA3A==}
+  /@nuxt/schema-edge@3.5.3-28099630.6163c5e3:
+    resolution: {integrity: sha512-ZlBgvtNYscpWvYMBUk+GuJT4fCZspIDpdTRLjIpuBma87xdDrMExGuNeAZd1JOVLWC+tOR0pCVlzqQWFKOLPAg==}
     engines: {node: ^14.18.0 || >=16.10.0}
     dependencies:
       defu: 6.1.2
@@ -4084,7 +4087,7 @@ packages:
       vue-svg-loader:
         optional: true
     dependencies:
-      '@nuxt/kit': /@nuxt/kit-edge@3.5.3-28095586.63cf6a5d
+      '@nuxt/kit': /@nuxt/kit-edge@3.5.3-28099630.6163c5e3
       '@vue/compiler-sfc': 3.3.4
       svgo: 3.0.2
     transitivePeerDependencies:
@@ -5229,6 +5232,10 @@ packages:
     resolution: {integrity: sha512-XkD+zwiqXHikFZm4AX/7JSCXA98U5Db4AFd5XUg/+9UNtnH75+Z9KxtpYiJZx36mUDVOwH83pl7yvCer6ewM3w==}
     dev: true
 
+  /ssr-window@4.0.2:
+    resolution: {integrity: sha512-ISv/Ch+ig7SOtw7G2+qkwfVASzazUnvlDTwypdLoPoySv+6MqlOV10VwPSE6EWkGjhW50lUmghPmpYZXMu/+AQ==}
+    dev: false
+
   /standard-as-callback@2.1.0:
     resolution: {integrity: sha512-qoRRSyROncaz1z0mvYqIE4lCd9p2R90i6GxW3uZv5ucSu8tU7B5HXUP1gG8pVZsYNVaXjk8ClXHPttLyxAL48A==}
     dev: true
@@ -5354,6 +5361,13 @@ packages:
       csso: 5.0.5
       picocolors: 1.0.0
     dev: true
+
+  /swiper@9.3.2:
+    resolution: {integrity: sha512-Kj9Z4kXRmJR3YT/Wj+XLWj8P6IcRt+WG38uL8M3/Wny7+6sV0TlP9vnE1X+Co9c7VzNooojWGnFa+Wf/9+CUMA==}
+    engines: {node: '>= 4.7.0'}
+    dependencies:
+      ssr-window: 4.0.2
+    dev: false
 
   /tapable@1.1.3:
     resolution: {integrity: sha512-4WK/bYZmj8xLr+HUCODHGF1ZFzsYffasLUgEiMBY4fgtltdO6B4WJtlSbPaDTLpYTcGVwM2qLnFTICEcNxs3kA==}

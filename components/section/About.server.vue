@@ -46,6 +46,7 @@ import image2 from '~/assets/images/about_image_2.jpg';
   @include mq("md") {
     align-items: flex-start;
     flex-direction: column;
+    padding-bottom: 65px;
   }
 
   &__content {
