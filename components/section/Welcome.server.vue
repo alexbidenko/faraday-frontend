@@ -16,23 +16,21 @@ import background from '~/assets/images/welcome_section_background.jpg';
 
     <div class="sectionWelcome__content container">
       <div class="sectionWelcome__info">
-        <h1 class="sectionWelcome__title">
-          ФАРАДЕЙ
-        </h1>
-        <p class="sectionWelcome__slogan">
-          «Стоп Износ»
-        </p>
+        <h1 class="sectionWelcome__title">ФАРАДЕЙ</h1>
+        <p class="sectionWelcome__slogan">«Стоп Износ»</p>
         <NuxtLink to="/#request">
-          <BaseButton size="l">
-            Оставить заявку
-          </BaseButton>
+          <BaseButton size="l"> Оставить заявку </BaseButton>
         </NuxtLink>
       </div>
 
       <div class="sectionWelcome__banner">
         <picture>
-          <source media="(max-width: 1024px)" :srcset="verticalHardox">
-          <img :src="hardox" alt="Надпись HARDOX" class="sectionWelcome__hardox">
+          <source media="(max-width: 1024px)" :srcset="verticalHardox" />
+          <img
+            :src="hardox"
+            alt="Надпись HARDOX"
+            class="sectionWelcome__hardox"
+          />
         </picture>
       </div>
     </div>
@@ -54,7 +52,11 @@ import background from '~/assets/images/welcome_section_background.jpg';
   }
 
   &__shadow {
-    background: linear-gradient(180deg, #0A363C 22.34%, rgba(10, 54, 60, 0) 100%);
+    background: linear-gradient(
+      180deg,
+      #0a363c 22.34%,
+      rgba(10, 54, 60, 0) 100%
+    );
     opacity: 0.7;
     position: absolute;
     top: 0;
@@ -75,7 +77,7 @@ import background from '~/assets/images/welcome_section_background.jpg';
     padding-top: 143px;
     flex: 1;
 
-    @include mq("xl") {
+    @include mq('xl') {
       padding-top: 140px;
     }
   }
@@ -88,7 +90,7 @@ import background from '~/assets/images/welcome_section_background.jpg';
     margin-top: 0;
     margin-bottom: 32px;
 
-    @include mq("xl") {
+    @include mq('xl') {
       font-size: 48px;
       line-height: 58px;
     }
@@ -101,7 +103,7 @@ import background from '~/assets/images/welcome_section_background.jpg';
     margin-top: 0;
     margin-bottom: 86px;
 
-    @include mq("xl") {
+    @include mq('xl') {
       font-size: 24px;
       line-height: 29px;
       margin-bottom: 84px;
@@ -112,7 +114,7 @@ import background from '~/assets/images/welcome_section_background.jpg';
     padding-top: 60px;
     flex: 1;
 
-    @include mq("xl") {
+    @include mq('xl') {
       padding-top: 42px;
     }
   }
@@ -123,12 +125,12 @@ import background from '~/assets/images/welcome_section_background.jpg';
     width: 668px;
     height: 188px;
 
-    @include mq("xxl") {
+    @include mq('xxl') {
       width: 476px;
       height: 134px;
     }
 
-    @include mq("md") {
+    @include mq('md') {
       width: 141px;
       height: 503px;
       transform: translateX(calc(24px + var(--container-padding)));

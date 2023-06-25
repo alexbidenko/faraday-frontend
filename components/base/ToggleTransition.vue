@@ -1,11 +1,11 @@
 <script lang="ts" setup>
-import type {VNode} from 'vue';
+import type { VNode } from 'vue';
 
 const props = defineProps<{
   state: number | string;
 }>();
 defineSlots<{
-  default: () => VNode[];
+  default: (props: object) => VNode[];
 }>();
 
 const component = ref<HTMLDivElement>();
@@ -16,8 +16,15 @@ const observer = ref<ResizeObserver>();
 const transitionEnabled = ref(false);
 const isOverflowHidden = ref(false);
 
-const transitionStyle = computed(() => `height ${transitionEnabled.value ? 0.3 : 0}s ease ${transitionEnabled.value && withDelay.value ? 0.3 : 0}s`);
-const heightStyle = computed(() => height.value !== undefined ? `${height.value}px` : 'auto');
+const transitionStyle = computed(
+  () =>
+    `height ${transitionEnabled.value ? 0.3 : 0}s ease ${
+      transitionEnabled.value && withDelay.value ? 0.3 : 0
+    }s`
+);
+const heightStyle = computed(() =>
+  height.value !== undefined ? `${height.value}px` : 'auto'
+);
 
 const onTransitionStart = () => {
   isOverflowHidden.value = true;
@@ -27,28 +34,38 @@ const onTransitionEnd = () => {
   isOverflowHidden.value = false;
 };
 
-watch(() => props.state, () => {
-  transitionEnabled.value = true;
-  setTimeout(() => {
-    transitionEnabled.value = false;
-  }, withDelay.value ? 600 : 300);
-});
-
-watch(component, (v) => {
-  observer.value?.disconnect();
-
-  if (v) {
-    const newHeight = v.clientHeight;
-    withDelay.value = newHeight < (height.value || 0);
-    height.value = newHeight;
-    initialized.value = true;
-
-    observer.value = new ResizeObserver(() => {
-      height.value = v.clientHeight;
-    });
-    observer.value.observe(v);
+watch(
+  () => props.state,
+  () => {
+    transitionEnabled.value = true;
+    setTimeout(
+      () => {
+        transitionEnabled.value = false;
+      },
+      withDelay.value ? 600 : 300
+    );
   }
-}, {immediate: true});
+);
+
+watch(
+  component,
+  (v) => {
+    observer.value?.disconnect();
+
+    if (v) {
+      const newHeight = v.clientHeight;
+      withDelay.value = newHeight < (height.value || 0);
+      height.value = newHeight;
+      initialized.value = true;
+
+      observer.value = new ResizeObserver(() => {
+        height.value = v.clientHeight;
+      });
+      observer.value.observe(v);
+    }
+  },
+  { immediate: true }
+);
 
 onBeforeUnmount(() => {
   observer.value?.disconnect();
@@ -60,7 +77,7 @@ onBeforeUnmount(() => {
     @transitionstart="onTransitionStart"
     @transitionend="onTransitionEnd"
     class="baseToggleTransition"
-    :class="{baseToggleTransition_initialized: initialized}"
+    :class="{ baseToggleTransition_initialized: initialized }"
   >
     <Transition name="toggle-transition">
       <div

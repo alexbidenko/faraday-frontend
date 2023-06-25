@@ -2,14 +2,24 @@
 const route = useRoute();
 
 const isActive = ref(route.path !== '/');
+const isStatic = ref(route.path !== '/');
 
 const checkActivity = () => {
-  isActive.value = route.path !== '/' || window.scrollY > (window.innerHeight - 80);
+  isActive.value =
+    route.path !== '/' || window.scrollY > window.innerHeight - 80;
 };
 
-watch(() => route.path, () => {
-  checkActivity();
-});
+const checkStatic = () => {
+  isStatic.value = route.path !== '/';
+};
+
+watch(
+  () => route.path,
+  () => {
+    checkActivity();
+    checkStatic();
+  }
+);
 
 onMounted(() => {
   checkActivity();
@@ -25,24 +35,21 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <header class="layoutHeader container" :class="{layoutHeader_active: isActive}">
+  <header
+    class="layoutHeader container"
+    :class="{ layoutHeader_active: isActive, layoutHeader_static: isStatic }"
+  >
     <NuxtLink to="/">
       <BaseLogo class="layoutHeader__logo" />
     </NuxtLink>
 
     <div class="layoutHeader__links">
-      <NuxtLink href="/#about" class="layoutHeader__link">
-        О нас
-      </NuxtLink>
-      <NuxtLink href="/#steel" class="layoutHeader__link">
+      <NuxtLink href="/#about" class="layoutHeader__link"> О нас </NuxtLink>
+      <NuxtLink href="/articles/hardox" class="layoutHeader__link">
         Сталь HARDOX
       </NuxtLink>
-      <NuxtLink href="/#services" class="layoutHeader__link">
-        Услуги
-      </NuxtLink>
-      <NuxtLink href="/#articles" class="layoutHeader__link">
-        Статьи
-      </NuxtLink>
+      <NuxtLink href="/#services" class="layoutHeader__link"> Услуги </NuxtLink>
+      <NuxtLink href="/articles" class="layoutHeader__link"> Статьи </NuxtLink>
     </div>
 
     <div class="layoutHeader__actions">
@@ -50,9 +57,7 @@ onBeforeUnmount(() => {
         {{ CONSTANTS.formattedPhone }}
       </a>
       <NuxtLink to="/#request">
-        <BaseButton>
-          Узнать
-        </BaseButton>
+        <BaseButton> Узнать </BaseButton>
       </NuxtLink>
     </div>
   </header>
@@ -63,6 +68,7 @@ onBeforeUnmount(() => {
 <style lang="scss" scoped>
 .layoutHeader {
   position: fixed;
+  top: 0;
   width: 100%;
   z-index: 10;
   padding-top: 32px;
@@ -73,11 +79,15 @@ onBeforeUnmount(() => {
   transition: background-color 0.3s ease, padding-top 0.3s ease;
 
   &_active {
-    background-color: #B76902;
+    background-color: #b76902;
     padding-top: 6px;
   }
 
-  @include mq("xl") {
+  &_static {
+    position: static;
+  }
+
+  @include mq('xl') {
     padding-top: 24px;
     padding-bottom: 4px;
 
@@ -86,7 +96,7 @@ onBeforeUnmount(() => {
     }
   }
 
-  @include mq("lg") {
+  @include mq('lg') {
     padding-top: 22px;
 
     &_active {
@@ -98,7 +108,7 @@ onBeforeUnmount(() => {
     width: 96px;
     height: 96px;
 
-    @include mq("lg") {
+    @include mq('lg') {
       width: 64px;
       height: 64px;
     }
@@ -107,7 +117,7 @@ onBeforeUnmount(() => {
   &__link {
     font-size: 24px;
     line-height: 34px;
-    color: #FFFFFF;
+    color: #ffffff;
     text-decoration: none;
     transition: opacity 0.3s ease;
 
@@ -115,7 +125,7 @@ onBeforeUnmount(() => {
       opacity: 0.7;
     }
 
-    @include mq("xxl") {
+    @include mq('xxl') {
       font-size: 16px;
       line-height: 26px;
     }
@@ -126,11 +136,11 @@ onBeforeUnmount(() => {
     align-items: center;
     gap: 48px;
 
-    @include mq("xl") {
+    @include mq('xl') {
       gap: 34px;
     }
 
-    @include mq("lg") {
+    @include mq('lg') {
       display: none;
     }
   }
@@ -140,11 +150,11 @@ onBeforeUnmount(() => {
     gap: 24px;
     align-items: center;
 
-    @include mq("xl") {
+    @include mq('xl') {
       gap: 32px;
     }
 
-    @include mq("md") {
+    @include mq('md') {
       display: none;
     }
   }

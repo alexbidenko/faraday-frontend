@@ -1,30 +1,35 @@
 <script lang="ts" setup>
-import type {VNode} from 'vue';
+import type { VNode } from 'vue';
 
 const props = defineProps<{
   placeholder: string;
 }>();
 const emit = defineEmits<{
-  select: [files: File[]],
+  select: [files: File[]];
 }>();
 const slots = defineSlots<{
-  hint?: () => VNode[];
+  hint?: (props: object) => VNode[];
 }>();
 
-const selectedFiles = ref<{file: File; id: number}[]>([]);
+const selectedFiles = ref<{ file: File; id: number }[]>([]);
 const isDragged = ref(false);
 const count = ref(0);
 
 const onChange = (event: Event) => {
-  const files = (event.target as HTMLInputElement).files || (event as InputEvent).dataTransfer?.files;
+  const files =
+    (event.target as HTMLInputElement).files ||
+    (event as InputEvent).dataTransfer?.files;
   if (files) {
     selectedFiles.value = selectedFiles.value.concat(
       [...files].map((file) => ({
         file,
         id: ++count.value,
-      })),
+      }))
     );
-    emit('select', selectedFiles.value.map((el) => el.file));
+    emit(
+      'select',
+      selectedFiles.value.map((el) => el.file)
+    );
   }
   isDragged.value = false;
 };
@@ -38,35 +43,34 @@ const onChange = (event: Event) => {
       @dragenter.prevent="isDragged = true"
       @dragleave.prevent="isDragged = false"
       class="baseAttachFiles__field"
-      :class="{baseAttachFiles__field_dragged: isDragged}"
+      :class="{ baseAttachFiles__field_dragged: isDragged }"
     >
-      <input
-        @change="onChange"
-        type="file"
-        multiple
-        hidden
+      <input @change="onChange" type="file" multiple hidden />
+      <BaseToggleTransition
+        :state="+!selectedFiles.length"
+        class="baseAttachFiles__content"
       >
-      <BaseToggleTransition :state="+!selectedFiles.length" class="baseAttachFiles__content">
         <span v-if="!selectedFiles.length" class="baseAttachFiles__placeholder">
           {{ props.placeholder }}
         </span>
-        <BaseCollapse
-          v-else
-          @click.stop.prevent
-          visible
-        >
-          <TransitionGroup
-            tag="ul"
-            name="list"
-            class="baseAttachFiles__files"
-          >
-            <li v-for="(item, index) in selectedFiles" :key="item.id" class="baseAttachFiles__item">
+        <BaseCollapse v-else @click.stop.prevent visible>
+          <TransitionGroup tag="ul" name="list" class="baseAttachFiles__files">
+            <li
+              v-for="(item, index) in selectedFiles"
+              :key="item.id"
+              class="baseAttachFiles__item"
+            >
               <SvgoSimpleFile class="baseAttachFiles__itemIcon" />
               <span class="baseAttachFiles__itemLabel">
-                <span class="baseAttachFiles__itemLabel_name">{{ item.file.name }}</span>
+                <span class="baseAttachFiles__itemLabel_name">{{
+                  item.file.name
+                }}</span>
                 <span>{{ fileSize(item.file) }}</span>
               </span>
-              <button @click="selectedFiles.splice(index, 1)" class="baseAttachFiles__itemDelete">
+              <button
+                @click="selectedFiles.splice(index, 1)"
+                class="baseAttachFiles__itemDelete"
+              >
                 <SvgoSimpleClose class="baseAttachFiles__itemDeleteIcon" />
               </button>
             </li>
@@ -108,7 +112,7 @@ const onChange = (event: Event) => {
   &__placeholder {
     font-size: 16px;
     line-height: 26px;
-    color: #858A8C;
+    color: #858a8c;
     display: block;
     padding-bottom: 2px;
   }
@@ -133,7 +137,7 @@ const onChange = (event: Event) => {
     color: #111112;
     display: block;
     padding-left: 13px;
-    border-left: 2px solid #B76902;
+    border-left: 2px solid #b76902;
   }
 
   &__item {

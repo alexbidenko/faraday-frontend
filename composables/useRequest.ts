@@ -1,4 +1,4 @@
 export default () => {
-  const {$csrfFetch} = useNuxtApp();
+  const { $csrfFetch } = useNuxtApp();
   return $csrfFetch as typeof $fetch;
 };

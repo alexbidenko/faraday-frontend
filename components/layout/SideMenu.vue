@@ -4,9 +4,12 @@ const MODAL_KEY = 'side-menu';
 const modalStore = useModalStore();
 const route = useRoute();
 
-watch(() => route.fullPath, () => {
-  modalStore.closeModal(MODAL_KEY);
-});
+watch(
+  () => route.fullPath,
+  () => {
+    modalStore.closeModal(MODAL_KEY);
+  }
+);
 
 const onGlobalClick = () => {
   if (modalStore.modalKeys[MODAL_KEY]) {
@@ -57,23 +60,15 @@ onBeforeUnmount(() => {
           <NuxtLink href="/#services" class="layoutSideMenu__link">
             Услуги
           </NuxtLink>
-          <NuxtLink href="/#articles" class="layoutSideMenu__link">
+          <NuxtLink href="/articles" class="layoutSideMenu__link">
             Статьи
           </NuxtLink>
         </div>
         <div class="layoutSideMenu__column">
-          <NuxtLink to="/" class="layoutSideMenu__link">
-            Статьи
-          </NuxtLink>
-          <NuxtLink to="/" class="layoutSideMenu__link">
-            О HARDOX
-          </NuxtLink>
-          <NuxtLink to="/" class="layoutSideMenu__link">
-            Марки стали
-          </NuxtLink>
-          <NuxtLink to="/" class="layoutSideMenu__link">
-            Все услуги
-          </NuxtLink>
+          <NuxtLink to="/" class="layoutSideMenu__link"> Статьи </NuxtLink>
+          <NuxtLink to="/" class="layoutSideMenu__link"> О HARDOX </NuxtLink>
+          <NuxtLink to="/" class="layoutSideMenu__link"> Марки стали </NuxtLink>
+          <NuxtLink to="/" class="layoutSideMenu__link"> Все услуги </NuxtLink>
         </div>
       </div>
 
@@ -92,7 +87,7 @@ onBeforeUnmount(() => {
   max-width: 100%;
   background: #121212;
 
-  @include mq("sm") {
+  @include mq('sm') {
     width: 100%;
   }
 
@@ -106,7 +101,7 @@ onBeforeUnmount(() => {
     position: fixed;
     display: none;
 
-    @include mq("md") {
+    @include mq('md') {
       display: block;
     }
   }
@@ -117,7 +112,7 @@ onBeforeUnmount(() => {
     display: flex;
     flex-direction: column;
 
-    @include mq("sm") {
+    @include mq('sm') {
       padding: 32px 16px;
     }
   }
@@ -126,7 +121,7 @@ onBeforeUnmount(() => {
     display: flex;
     gap: 34px;
 
-    @include mq("sm") {
+    @include mq('sm') {
       flex-direction: column;
       gap: 52px;
     }
@@ -141,7 +136,7 @@ onBeforeUnmount(() => {
       width: 301px;
     }
 
-    @include mq("sm") {
+    @include mq('sm') {
       gap: 10px;
 
       &:nth-child(1) {
@@ -155,14 +150,14 @@ onBeforeUnmount(() => {
     font-size: 24px;
     line-height: 32px;
     letter-spacing: 0.2px;
-    color: #FFFFFF;
+    color: #ffffff;
     transition: opacity 0.3s ease;
 
     &:hover {
       opacity: 0.7;
     }
 
-    @include mq("sm") {
+    @include mq('sm') {
       font-size: 30px;
       line-height: 38px;
     }
@@ -175,11 +170,11 @@ onBeforeUnmount(() => {
     margin-top: auto;
   }
 
-  &__subLink  {
+  &__subLink {
     font-size: 18px;
     line-height: 24px;
     letter-spacing: 0.2px;
-    color: #FFFFFF;
+    color: #ffffff;
     transition: opacity 0.3s ease;
     background: none;
     padding: 0;

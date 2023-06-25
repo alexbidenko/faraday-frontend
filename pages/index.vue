@@ -1,5 +1,8 @@
 <template>
-  <div>
-    <NuxtPage />
-  </div>
+  <main>
+    <SectionWelcome />
+    <SectionAbout />
+    <SectionServices />
+    <SectionForm />
+  </main>
 </template>

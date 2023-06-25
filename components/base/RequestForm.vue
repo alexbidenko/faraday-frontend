@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import background from '~/assets/images/form_background.jpg';
+import { NBSP } from '~/utils/constants';
 
 const request = useRequest();
 
@@ -7,7 +8,6 @@ const name = ref('');
 const phone = ref('');
 const message = ref('');
 const selectedFiles = ref<File[]>([]);
-const isValidatedByRecaptcha = ref(false);
 
 const isValid = computed(() => !!(name.value && phone.value && message.value));
 
@@ -16,7 +16,7 @@ const onFilesSelect = (files: File[]) => {
 };
 
 const onSubmit = () => {
-  if (!isValid.value || !isValidatedByRecaptcha.value) return;
+  if (!isValid.value) return;
 
   const formData = new FormData();
   formData.append('name', name.value);
@@ -24,7 +24,20 @@ const onSubmit = () => {
   formData.append('message', message.value);
   selectedFiles.value.forEach((el) => formData.append('files', el, el.name));
 
-  request('/api/email', {body: formData, method: 'POST'});
+  request('/api/email', { body: formData, method: 'POST' })
+    .then(() => {
+      name.value = '';
+      phone.value = '';
+      message.value = '';
+      selectedFiles.value = [];
+
+      nextTick(() => {
+        alert('Сообщение успешно отправлено!');
+      });
+    })
+    .catch(() => {
+      alert('Во время отправки сообщеняи произошла ошибка');
+    });
 };
 </script>
 
@@ -39,16 +52,14 @@ const onSubmit = () => {
 
     <div class="baseRequestForm__content">
       <form @submit.prevent="onSubmit" class="baseRequestForm__form">
-        <h3 class="baseRequestForm__question">
-          Остались вопросы?
-        </h3>
+        <h3 class="baseRequestForm__question">Остались вопросы?</h3>
 
         <div class="baseRequestForm__fields">
           <BaseInput
             v-model="name"
             icon="profile"
             autocomplete="name"
-            placeholder="Как к вам обращаться?"
+            placeholder="Как к вам обращаться?"
           />
           <BaseInput
             v-model="phone"
@@ -56,16 +67,16 @@ const onSubmit = () => {
             type="tel"
             autocomplete="tel"
             inputmode="tel"
-            placeholder="+7 (999) 999-99-99"
+            placeholder="+7 (999) 999-99-99"
           />
-          <BaseTextArea v-model="message" placeholder="Напишите дополнительные пожелания" />
-          <BaseAttachFiles
-            @change="onFilesSelect"
-            placeholder="Загрузите файл"
-          >
+          <BaseTextArea
+            v-model="message"
+            placeholder="Напишите дополнительные пожелания"
+          />
+          <BaseAttachFiles @change="onFilesSelect" placeholder="Загрузите файл">
             <template #hint>
               Можем обсудить условия выполнения индивидуального заказа
-              (прикрепите чертёж к заявке звонка)
+              (прикрепите чертёж к{{ NBSP }}заявке звонка)
             </template>
           </BaseAttachFiles>
         </div>
@@ -83,9 +94,7 @@ const onSubmit = () => {
 
     <div class="baseRequestForm__additional">
       <BaseLogo class="baseRequestForm__logo" />
-      <h2 class="baseRequestForm__title">
-        Контакты
-      </h2>
+      <h2 class="baseRequestForm__title">Контакты</h2>
       <div class="baseRequestForm__contacts">
         <a :href="`tel:${CONSTANTS.phone}`" class="baseRequestForm__link">
           <SvgoSimplePhone />
@@ -126,17 +135,17 @@ const onSubmit = () => {
     padding-top: 86px;
     padding-bottom: 138px;
 
-    @include mq("xxl") {
+    @include mq('xxl') {
       padding-left: var(--grid-gap);
     }
 
-    @include mq("md") {
+    @include mq('md') {
       width: 100%;
       padding-top: 84px;
       padding-bottom: 53px;
     }
 
-    @include mq("sm") {
+    @include mq('sm') {
       padding-left: 16px;
       padding-right: 16px;
     }
@@ -147,21 +156,21 @@ const onSubmit = () => {
 
     margin: 0 auto;
     background: rgba(243, 233, 233, 0.12);
-    border: 2px solid #F2F2F2;
+    border: 2px solid #f2f2f2;
     box-shadow: 12px 22px 27px 24px rgba(58, 58, 58, 0.25);
     backdrop-filter: blur(39px);
     border-radius: 32px;
     padding: 48px 40px;
 
-    @include mq("xxl") {
+    @include mq('xxl') {
       @include columns(6, 1);
     }
 
-    @include mq("md") {
+    @include mq('md') {
       @include columns(10);
     }
 
-    @include mq("sm") {
+    @include mq('sm') {
       width: 100%;
       padding: 48px 12px;
     }
@@ -197,7 +206,7 @@ const onSubmit = () => {
     align-items: center;
     justify-content: center;
 
-    @include mq("md") {
+    @include mq('md') {
       display: none;
     }
   }
@@ -210,7 +219,7 @@ const onSubmit = () => {
     font-weight: 700;
     font-size: 40px;
     line-height: 48px;
-    color: #FFFFFF;
+    color: #ffffff;
     margin-top: 80px;
     margin-bottom: 77px;
   }
@@ -224,7 +233,7 @@ const onSubmit = () => {
   &__link {
     width: 48px;
     height: 48px;
-    color: #FFFFFF;
+    color: #ffffff;
 
     &:hover svg {
       transform: translateY(-10px);

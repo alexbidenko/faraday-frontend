@@ -1,12 +1,12 @@
 <script lang="ts" setup>
-import type {VNode} from 'vue';
+import type { VNode } from 'vue';
 
 const props = defineProps<{
   visible: boolean;
   fixedDuration?: number;
 }>();
 defineSlots<{
-  default: () => VNode[];
+  default: (props: object) => VNode[];
 }>();
 
 const content = ref<HTMLDivElement>();
@@ -15,9 +15,17 @@ const height = ref(0);
 const deltaHeight = ref(0);
 const isInitialized = ref(false);
 
-const containerHeightStyle = computed(() => (isInitialized.value || !props.visible) ? `${props.visible ? height.value : 0}px` : 'auto');
-const heightTransitionStyle = computed(() => `height ${props.fixedDuration || deltaHeight.value}ms ease`);
-const opacityTransitionStyle = computed(() => `opacity ${props.fixedDuration || deltaHeight.value}ms ease`);
+const containerHeightStyle = computed(() =>
+  isInitialized.value || !props.visible
+    ? `${props.visible ? height.value : 0}px`
+    : 'auto'
+);
+const heightTransitionStyle = computed(
+  () => `height ${props.fixedDuration || deltaHeight.value}ms ease`
+);
+const opacityTransitionStyle = computed(
+  () => `opacity ${props.fixedDuration || deltaHeight.value}ms ease`
+);
 
 watch(content, (v) => {
   if (v) height.value = v.scrollHeight;
@@ -27,9 +35,12 @@ watch(height, (value, prevValue) => {
   deltaHeight.value = Math.abs(value - prevValue);
 });
 
-watch(() => props.visible, () => {
-  deltaHeight.value = height.value;
-});
+watch(
+  () => props.visible,
+  () => {
+    deltaHeight.value = height.value;
+  }
+);
 
 onMounted(() => {
   if (content.value) {
@@ -52,11 +63,11 @@ onBeforeUnmount(() => {
 <template>
   <div
     class="baseCollapse"
-    :class="{baseCollapse_initialized: isInitialized}"
+    :class="{ baseCollapse_initialized: isInitialized }"
   >
     <div
       class="baseCollapse__content"
-      :class="{baseCollapse__content_visible: props.visible}"
+      :class="{ baseCollapse__content_visible: props.visible }"
       ref="content"
     >
       <slot />

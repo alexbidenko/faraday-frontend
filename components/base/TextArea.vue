@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type {TextareaHTMLAttributes} from 'vue';
+import type { TextareaHTMLAttributes } from 'vue';
 
 // eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface Props extends /* @vue-ignore */ TextareaHTMLAttributes {}
@@ -26,7 +26,7 @@ const modelValue = defineModel<string>();
   outline: none;
 
   &::placeholder {
-    color: #858A8C;
+    color: #858a8c;
   }
 }
 </style>

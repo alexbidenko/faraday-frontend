@@ -9,7 +9,7 @@
   padding-top: 94px;
   padding-bottom: 94px;
 
-  @include mq("sm") {
+  @include mq('sm') {
     padding-left: 0;
     padding-right: 0;
   }

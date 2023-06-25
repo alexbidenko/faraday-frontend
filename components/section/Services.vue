@@ -1,24 +1,23 @@
 <script lang="ts" setup>
 import 'swiper/css';
 
-import {Swiper, SwiperSlide} from 'swiper/vue';
+import { Swiper, SwiperSlide } from 'swiper/vue';
 
 import image1 from '~/assets/images/service_image_1.jpg';
 import image2 from '~/assets/images/service_image_2.jpg';
 import image3 from '~/assets/images/service_image_3.jpg';
 import image4 from '~/assets/images/service_image_4.jpg';
+import { NBSP } from '~/utils/constants';
 </script>
 
 <template>
   <section id="services" class="sectionServices container">
-    <h2 class="sectionServices__title">
-      Услуги
-    </h2>
+    <h2 class="sectionServices__title">Услуги</h2>
 
     <Swiper
       :slides-per-view="1"
       :space-between="12"
-      :breakpoints="{768: {enabled: false}}"
+      :breakpoints="{ 768: { enabled: false } }"
     >
       <SwiperSlide class="sectionServices__card">
         <div class="sectionServices__cardHeader">
@@ -28,9 +27,7 @@ import image4 from '~/assets/images/service_image_4.jpg';
             format="webp"
             class="sectionServices__cardImage"
           />
-          <h3 class="sectionServices__cardTitle">
-            Продажа стали
-          </h3>
+          <h3 class="sectionServices__cardTitle">Продажа стали</h3>
         </div>
 
         <ul class="sectionServices__cardContent">
@@ -52,14 +49,14 @@ import image4 from '~/assets/images/service_image_4.jpg';
             class="sectionServices__cardImage"
           />
           <h3 class="sectionServices__cardTitle">
-            Изготовление деталей из стали
+            Изготовление деталей из{{ NBSP }}стали
           </h3>
         </div>
 
         <ul class="sectionServices__cardContent">
           <li>Лазерная резка</li>
           <li>Плазменная резка</li>
-          <li>Газовая резка на станке с ЧПУ</li>
+          <li>Газовая резка на{{ NBSP }}станке с{{ NBSP }}ЧПУ</li>
           <li>Гидроаброзивная резка</li>
           <li>Механическая обработка</li>
           <li>Вальцовка</li>
@@ -73,13 +70,16 @@ import image4 from '~/assets/images/service_image_4.jpg';
             format="webp"
             class="sectionServices__cardImage"
           />
-          <h3 class="sectionServices__cardTitle sectionServices__cardTitle_dark">
-            Работа по индивидуальным чертежам заказчика
+          <h3
+            class="sectionServices__cardTitle sectionServices__cardTitle_dark"
+          >
+            Работа по{{ NBSP }}индивидуальным чертежам заказчика
           </h3>
         </div>
 
         <div class="sectionServices__cardContent">
-          Выполнение индивидуальных заказов по присланным чертежам или в результате обсуждения
+          Выполнение индивидуальных заказов по{{ NBSP }}присланным чертежам
+          или{{ NBSP }}в{{ NBSP }}результате обсуждения
         </div>
       </SwiperSlide>
       <SwiperSlide class="sectionServices__card">
@@ -90,16 +90,18 @@ import image4 from '~/assets/images/service_image_4.jpg';
             format="webp"
             class="sectionServices__cardImage"
           />
-          <h3 class="sectionServices__cardTitle sectionServices__cardTitle_dark">
+          <h3
+            class="sectionServices__cardTitle sectionServices__cardTitle_dark"
+          >
             Доставка
           </h3>
         </div>
 
         <div class="sectionServices__cardContent">
           <strong>Самовывоз или доставка</strong>
-          Санкт-Петербург и Ленинградская область
-          <br>
-          <br>
+          Санкт-Петербург и{{ NBSP }}Ленинградская область
+          <br />
+          <br />
           <strong>Транспортными компаниями</strong>
           Другие регионы России
         </div>
@@ -111,7 +113,7 @@ import image4 from '~/assets/images/service_image_4.jpg';
 
 <style lang="scss" scoped>
 .sectionServices {
-  @include mq("sm") {
+  @include mq('sm') {
     padding: 0 !important;
   }
 
@@ -125,7 +127,7 @@ import image4 from '~/assets/images/service_image_4.jpg';
   }
 
   :deep(.swiper) {
-    @include mq("sm") {
+    @include mq('sm') {
       padding: var(--container-padding);
     }
   }
@@ -134,26 +136,26 @@ import image4 from '~/assets/images/service_image_4.jpg';
     grid-template-columns: repeat(4, 1fr);
     gap: 40px;
 
-    @include mq("xl") {
+    @include mq('xl') {
       gap: 20px;
     }
 
-    @include mq("md") {
+    @include mq('md') {
       gap: 20px;
       grid-template-columns: repeat(2, 1fr);
     }
 
-    @include mq("sm") {
+    @include mq('sm') {
       gap: 0;
     }
 
-    @include mq("none", "sm") {
+    @include mq('none', 'sm') {
       display: grid;
     }
   }
 
   &__card {
-    @include mq("none", "sm") {
+    @include mq('none', 'sm') {
       width: 100% !important;
       margin-right: 0 !important;
     }
@@ -183,17 +185,17 @@ import image4 from '~/assets/images/service_image_4.jpg';
     font-weight: 700;
     font-size: 1.09vw;
     line-height: 1.2;
-    color: #F2F2F2;
+    color: #f2f2f2;
     padding: 32px 24px;
     height: 130px;
     background: rgba(243, 233, 233, 0.3);
     backdrop-filter: blur(20px);
 
-    @include mq("md") {
+    @include mq('md') {
       font-size: 2.4vw;
     }
 
-    @include mq("sm") {
+    @include mq('sm') {
       font-size: 6vw;
       line-height: 29px;
     }
@@ -209,7 +211,7 @@ import image4 from '~/assets/images/service_image_4.jpg';
     color: #111112;
     margin-top: 40px;
 
-    @include mq("xl") {
+    @include mq('xl') {
       font-size: 16px;
       line-height: 24px;
     }

@@ -1,21 +1,25 @@
 <script lang="ts" setup>
 import image1 from '~/assets/images/about_image_1.jpg';
 import image2 from '~/assets/images/about_image_2.jpg';
+import { NBSP } from '~/utils/constants';
 </script>
 
 <template>
   <section id="about" class="sectionAbout container">
     <div class="sectionAbout__content">
-      <h2 class="sectionAbout__title">
-        О нас
-      </h2>
+      <h2 class="sectionAbout__title">О{{ NBSP }}нас</h2>
       <p class="sectionAbout__description">
-        Наша компания работает со шведской сталью Hardox®, не имеющей в мире аналогов по стойкости к абразивному износу.
-        А так же со сталью российских производителей.
-        <br>
-        <br>
-        Специализируемся на продаже стали и изготовление деталей из неё.
-        Работаем с индивидуальными заказами по чертежам заказчика.
+        Наша компания работает со{{ NBSP }}шведской сталью Hardox®, не{{
+          NBSP
+        }}имеющей в{{ NBSP }}мире аналогов по{{ NBSP }}стойкости к{{
+          NBSP
+        }}абразивному износу. А{{ NBSP }}так{{ NBSP }}же{{ NBSP }}со сталью
+        российских производителей.
+        <br />
+        <br />
+        Специализируемся на{{ NBSP }}продаже стали и{{ NBSP }}изготовление
+        деталей из{{ NBSP }}неё. Работаем с{{ NBSP }}индивидуальными заказами
+        по{{ NBSP }}чертежам заказчика.
       </p>
     </div>
 
@@ -43,7 +47,7 @@ import image2 from '~/assets/images/about_image_2.jpg';
   gap: var(--grid-gap);
   overflow: hidden;
 
-  @include mq("md") {
+  @include mq('md') {
     align-items: flex-start;
     flex-direction: column;
     padding-bottom: 65px;
@@ -55,11 +59,11 @@ import image2 from '~/assets/images/about_image_2.jpg';
     padding-top: 114px;
     padding-bottom: 125px;
 
-    @include mq("xl") {
+    @include mq('xl') {
       padding-bottom: 94px;
     }
 
-    @include mq("md") {
+    @include mq('md') {
       width: 100%;
     }
   }
@@ -72,7 +76,7 @@ import image2 from '~/assets/images/about_image_2.jpg';
     margin-top: 0;
     margin-bottom: 40px;
 
-    @include mq("xxl") {
+    @include mq('xxl') {
       font-size: 48px;
       line-height: 58px;
     }
@@ -84,7 +88,7 @@ import image2 from '~/assets/images/about_image_2.jpg';
     color: #111112;
     margin: 0;
 
-    @include mq("xxl") {
+    @include mq('xxl') {
       font-size: 24px;
       line-height: 30px;
     }
@@ -96,11 +100,11 @@ import image2 from '~/assets/images/about_image_2.jpg';
     gap: 19px;
     justify-content: flex-end;
 
-    @include mq("xl") {
+    @include mq('xl') {
       gap: 20px;
     }
 
-    @include mq("md") {
+    @include mq('md') {
       margin-left: auto;
     }
 
@@ -110,7 +114,7 @@ import image2 from '~/assets/images/about_image_2.jpg';
       display: block;
       margin-top: 57px;
 
-      @include mq("xxl") {
+      @include mq('xxl') {
         width: 280px;
         height: 280px;
         margin-top: 79px;
@@ -122,7 +126,7 @@ import image2 from '~/assets/images/about_image_2.jpg';
       height: 401px;
       display: block;
 
-      @include mq("xxl") {
+      @include mq('xxl') {
         width: 280px;
         height: 280px;
       }

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type {VNode} from 'vue';
+import type { VNode } from 'vue';
 
 enum Direction {
   vertical = 'vertical',
@@ -7,21 +7,24 @@ enum Direction {
   none = 'none',
 }
 
-defineOptions({inheritAttrs: false});
-const props = withDefaults(defineProps<{
-  tag: string;
-  visible: boolean;
-  fullHeight?: boolean;
-  withOverlay?: boolean;
-  zIndex?: number;
-  contentClass?: string;
-}>(), {tag: 'div', zIndex: 10});
+defineOptions({ inheritAttrs: false });
+const props = withDefaults(
+  defineProps<{
+    tag: string;
+    visible: boolean;
+    fullHeight?: boolean;
+    withOverlay?: boolean;
+    zIndex?: number;
+    contentClass?: string;
+  }>(),
+  { tag: 'div', zIndex: 10 }
+);
 const emit = defineEmits<{
   (event: 'update:visible', value: boolean): void;
 }>();
 const attrs = useAttrs();
 defineSlots<{
-  default: () => VNode[];
+  default: (props: object) => VNode[];
 }>();
 const zIndex = toRef(props, 'zIndex');
 
@@ -45,13 +48,18 @@ const onTouchMove = (event: TouchEvent | MouseEvent) => {
   const yPosition = normalizeYPosition(event);
 
   if (directional.value === Direction.none) {
-    directional.value = xPosition - touchStartXPosition.value > Math.abs(yPosition - touchStartYPosition.value) ?
-      Direction.horizontal :
-      Direction.vertical;
+    directional.value =
+      xPosition - touchStartXPosition.value >
+      Math.abs(yPosition - touchStartYPosition.value)
+        ? Direction.horizontal
+        : Direction.vertical;
   }
 
   if (directional.value === Direction.horizontal) {
-    touchDeltaXPosition.value = Math.max(0, xPosition - touchStartXPosition.value);
+    touchDeltaXPosition.value = Math.max(
+      0,
+      xPosition - touchStartXPosition.value
+    );
     isMoved.value = true;
   }
 };
@@ -89,7 +97,7 @@ const onTouchStart = (event: TouchEvent | MouseEvent) => {
   container.value.addEventListener('mouseup', onTouchEnd);
 };
 
-defineExpose({container});
+defineExpose({ container });
 </script>
 
 <template>
@@ -100,14 +108,22 @@ defineExpose({container});
           v-if="props.visible"
           @click="emit('update:visible', false)"
           class="baseSidebar"
-          :class="{baseSidebar_fullHeight: props.fullHeight, baseSidebar_withOverlay: props.withOverlay}"
-          :style="{zIndex}"
+          :class="{
+            baseSidebar_fullHeight: props.fullHeight,
+            baseSidebar_withOverlay: props.withOverlay,
+          }"
+          :style="{ zIndex }"
         >
           <div v-if="props.withOverlay" class="baseSidebar__overlay" />
           <component
             ref="container"
             :is="props.tag"
-            :style="[touchStartXPosition ? `transform: translateX(${touchDeltaXPosition}px)` : 'transition: transform 0.5s ease', {zIndex}]"
+            :style="[
+              touchStartXPosition
+                ? `transform: translateX(${touchDeltaXPosition}px)`
+                : 'transition: transform 0.5s ease',
+              { zIndex },
+            ]"
             @click.stop
             @touchstart="onTouchStart"
             @mousedown="onTouchStart"

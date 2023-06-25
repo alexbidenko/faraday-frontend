@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type {InputHTMLAttributes} from 'vue';
+import type { InputHTMLAttributes } from 'vue';
 
 enum Icon {
   profile = 'profile',
@@ -10,13 +10,13 @@ interface Props extends /* @vue-ignore */ InputHTMLAttributes {
   icon?: 'profile' | 'phone';
 }
 
-defineOptions({inheritAttrs: false});
+defineOptions({ inheritAttrs: false });
 const props = defineProps<Props>();
 const attrs = useAttrs();
 const modelValue = defineModel();
 
 const inputAttrs = computed(() => {
-  const {class: _, ...otherAttrs} = attrs;
+  const { class: _, ...otherAttrs } = attrs;
   return otherAttrs;
 });
 
@@ -35,9 +35,15 @@ const onChange = (event: Event) => {
       @input="onChange"
       class="baseInput__field"
       v-bind="inputAttrs"
-    >
-    <SvgoSimpleProfile v-if="props.icon === Icon.profile" class="baseInput__icon" />
-    <SvgoSimplePhone v-else-if="props.icon === Icon.phone" class="baseInput__icon" />
+    />
+    <SvgoSimpleProfile
+      v-if="props.icon === Icon.profile"
+      class="baseInput__icon"
+    />
+    <SvgoSimplePhone
+      v-else-if="props.icon === Icon.phone"
+      class="baseInput__icon"
+    />
   </label>
 </template>
 
@@ -61,9 +67,10 @@ const onChange = (event: Event) => {
     font-size: 16px;
     line-height: 26px;
     outline: none;
+    white-space: nowrap;
 
     &::placeholder {
-      color: #858A8C;
+      color: #858a8c;
     }
   }
 

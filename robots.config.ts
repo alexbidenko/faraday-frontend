@@ -1,4 +1,1 @@
-export default [
-  {UserAgent: '*'},
-  {Disallow: '/'},
-];
+export default [{ UserAgent: '*' }, { Disallow: '/' }];

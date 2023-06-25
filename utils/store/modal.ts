@@ -1,4 +1,4 @@
-import {defineStore} from 'pinia';
+import { defineStore } from 'pinia';
 
 export const useModalStore = defineStore('modal', () => {
   const modalKeys = ref<Record<string, string>>({});
@@ -12,7 +12,8 @@ export const useModalStore = defineStore('modal', () => {
 
   const closeModal = (key: string) => {
     delete modalKeys.value[key];
-    if (!Object.keys(modalKeys.value).length && process.client) document.body.classList.remove('overflow-hidden');
+    if (!Object.keys(modalKeys.value).length && process.client)
+      document.body.classList.remove('overflow-hidden');
   };
 
   const toggleModal = (key: string, value = !modalKeys.value[key]) => {

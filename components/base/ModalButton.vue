@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-const wrapper = ref<HTMLButtonElement>(null);
+const wrapper = ref<HTMLButtonElement>();
 
-defineExpose({wrapper});
+defineExpose({ wrapper });
 
 const props = defineProps<{
   burger?: boolean;
@@ -13,7 +13,10 @@ const props = defineProps<{
   <button
     ref="wrapper"
     class="baseModalButton"
-    :class="{baseModalButton_opened: !props.burger, baseModalButton_dark: props.dark}"
+    :class="{
+      baseModalButton_opened: !props.burger,
+      baseModalButton_dark: props.dark,
+    }"
   >
     <span class="baseModalButton__line" />
     <span class="baseModalButton__line" />
@@ -46,7 +49,8 @@ const props = defineProps<{
   &_opened {
     #{$self}__line {
       width: 35px;
-      transition:  transform 0.3s ease, width 0.3s ease, background-color 0.3s ease;
+      transition: transform 0.3s ease, width 0.3s ease,
+        background-color 0.3s ease;
 
       &:nth-child(1) {
         transform: translate(-50%, -50%) rotate(-45deg);
@@ -70,7 +74,8 @@ const props = defineProps<{
     border-radius: 1px;
     top: 50%;
     left: 50%;
-    transition: transform 0.3s ease, width 0.3s ease, background-color 0.3s ease 0.2s;
+    transition: transform 0.3s ease, width 0.3s ease,
+      background-color 0.3s ease 0.2s;
     transform-origin: 50% 50%;
 
     &:nth-child(1) {

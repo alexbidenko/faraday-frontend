@@ -1,4 +1,4 @@
-import {Manifest} from 'vue-bundle-renderer';
+import { Manifest } from 'vue-bundle-renderer';
 
 const developmentOrigin = `http://localhost:${process.env.PORT || 3000}`;
 
@@ -7,7 +7,8 @@ export default defineNuxtConfig({
   modules: [
     'nuxt-security',
     '@nuxtjs/google-fonts',
-    '@nuxt/image-edge',
+    '@nuxt/content',
+    '@nuxt/image',
     'nuxt-svgo',
     '@nuxtjs/robots',
     '@pinia/nuxt',
@@ -17,27 +18,48 @@ export default defineNuxtConfig({
     smtpPort: +(process.env.SMTP_PORT || 0) || undefined,
     smtpUser: process.env.SMTP_USER,
     smtpPassword: process.env.SMTP_PASSWORD,
-    recaptcha: {v3SiteKey: process.env.RECAPTCHA_SITE_KEY},
+    recaptcha: { v3SiteKey: process.env.RECAPTCHA_SITE_KEY },
   },
-  vite: {css: {preprocessorOptions: {scss: {additionalData: '@import "@/assets/styles/mixins.scss";'}}}},
-  typescript: {tsConfig: {compilerOptions: {moduleResolution: 'bundler'}}},
+  vite: {
+    vue: {
+      script: {
+        defineModel: true,
+      },
+    },
+    css: {
+      preprocessorOptions: {
+        scss: { additionalData: '@import "@/assets/styles/mixins.scss";' },
+      },
+    },
+  },
+  typescript: {
+    tsConfig: { compilerOptions: { moduleResolution: 'bundler' } },
+  },
   hooks: {
     // https://github.com/nuxt/nuxt/issues/18376
     'build:manifest': (manifest: Manifest) => {
       Object.values(manifest).forEach((file) => {
-        file.assets = file.assets?.filter((asset: string) => !/(.+).(webp|png|jpe?g|svg)$/.test(asset));
+        file.assets = file.assets?.filter(
+          (asset: string) => !/(.+).(webp|png|jpe?g|svg)$/.test(asset)
+        );
       });
     },
   },
-  routeRules: {'/': {static: true}},
-  googleFonts: {families: {Inter: {wght: [400, 500, 600, 700]}}},
+  routeRules: { '/': { static: true } },
+  googleFonts: { families: { Inter: { wght: [400, 500, 600, 700] } } },
   security: {
     csrf: true,
     xssValidator: false,
   },
   image: {
-    domains: [...(process.env.NODE_ENV === 'development' ? [developmentOrigin] : [])],
-    alias: {...(process.env.NODE_ENV === 'development' ? {'_nuxt': `${developmentOrigin}/_nuxt`} : {})},
+    domains: [
+      ...(process.env.NODE_ENV === 'development' ? [developmentOrigin] : []),
+    ],
+    alias: {
+      ...(process.env.NODE_ENV === 'development'
+        ? { _nuxt: `${developmentOrigin}/_nuxt` }
+        : {}),
+    },
     screens: {
       xs: 375,
       sm: 768,
@@ -47,13 +69,13 @@ export default defineNuxtConfig({
       xxl: 1920,
       xxxl: 2560,
     },
-    ...(process.env.NODE_ENV === 'production' ? {ipx: {maxAge: 31536000}} : {}),
+    ...(process.env.NODE_ENV === 'production'
+      ? { ipx: { maxAge: 31536000 } }
+      : {}),
   },
-  svgo: {autoImportPath: './assets/icons/'},
+  svgo: { autoImportPath: './assets/icons/' },
   pinia: {
-    autoImports: [
-      'defineStore',
-    ],
+    autoImports: ['defineStore'],
   },
   experimental: {
     componentIslands: true,
