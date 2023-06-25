@@ -39,6 +39,13 @@ import { NBSP } from '~/utils/constants';
           <li>СТ40Х</li>
           <li>Другая по запросу</li>
         </ul>
+
+        <NuxtLink
+          to="/articles/steel/1.09g2s"
+          class="sectionServices__cardLink"
+        >
+          Подробнее
+        </NuxtLink>
       </SwiperSlide>
       <SwiperSlide class="sectionServices__card">
         <div class="sectionServices__cardHeader">
@@ -61,6 +68,13 @@ import { NBSP } from '~/utils/constants';
           <li>Механическая обработка</li>
           <li>Вальцовка</li>
         </ul>
+
+        <NuxtLink
+          to="/articles/steel/1.09g2s"
+          class="sectionServices__cardLink"
+        >
+          Подробнее
+        </NuxtLink>
       </SwiperSlide>
       <SwiperSlide class="sectionServices__card">
         <div class="sectionServices__cardHeader">
@@ -210,6 +224,9 @@ import { NBSP } from '~/utils/constants';
     line-height: 34px;
     color: #111112;
     margin-top: 40px;
+    margin-bottom: 0;
+    padding-bottom: 32px;
+    border-bottom: 1px solid #858a8c;
 
     @include mq('xl') {
       font-size: 16px;
@@ -217,7 +234,7 @@ import { NBSP } from '~/utils/constants';
     }
 
     &:not(:last-child) {
-      margin-bottom: 32px;
+      margin-bottom: 24px;
     }
 
     strong {
@@ -228,6 +245,21 @@ import { NBSP } from '~/utils/constants';
 
     &:is(ul) {
       padding-left: 24px;
+    }
+  }
+
+  &__cardLink {
+    margin-left: auto;
+    display: block;
+    width: fit-content;
+    color: #111112;
+    font-size: 16px;
+    line-height: 26px;
+    text-underline-offset: 6px;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 0.7;
     }
   }
 }

@@ -8,6 +8,8 @@
 
   <NuxtPage />
 
+  <LayoutFooter />
+
   <div id="modals" />
 </template>
 
