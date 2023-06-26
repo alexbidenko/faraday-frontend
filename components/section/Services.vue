@@ -226,7 +226,6 @@ import { NBSP } from '~/utils/constants';
     margin-top: 40px;
     margin-bottom: 0;
     padding-bottom: 32px;
-    border-bottom: 1px solid #858a8c;
 
     @include mq('xl') {
       font-size: 16px;
@@ -235,6 +234,7 @@ import { NBSP } from '~/utils/constants';
 
     &:not(:last-child) {
       margin-bottom: 24px;
+      border-bottom: 1px solid #858a8c;
     }
 
     strong {

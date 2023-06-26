@@ -8,6 +8,7 @@ const name = ref('');
 const phone = ref('');
 const message = ref('');
 const selectedFiles = ref<File[]>([]);
+const isSuccessful = ref(false);
 
 const isValid = computed(() => !!(name.value && phone.value && message.value));
 
@@ -31,9 +32,11 @@ const onSubmit = () => {
       message.value = '';
       selectedFiles.value = [];
 
-      nextTick(() => {
-        alert('Сообщение успешно отправлено!');
-      });
+      isSuccessful.value = true;
+
+      setTimeout(() => {
+        isSuccessful.value = false;
+      }, 10000);
     })
     .catch(() => {
       alert('Во время отправки сообщеняи произошла ошибка');
@@ -42,7 +45,10 @@ const onSubmit = () => {
 </script>
 
 <template>
-  <div class="baseRequestForm">
+  <div
+    class="baseRequestForm"
+    :class="{ baseRequestForm_success: isSuccessful }"
+  >
     <NuxtImg
       :src="background"
       :sizes="IMAGE_SIZES.fullscreen"
@@ -51,45 +57,60 @@ const onSubmit = () => {
     />
 
     <div class="baseRequestForm__content">
-      <form @submit.prevent="onSubmit" class="baseRequestForm__form">
-        <h3 class="baseRequestForm__question">Остались вопросы?</h3>
+      <div class="baseRequestForm__card">
+        <form @submit.prevent="onSubmit" class="baseRequestForm__form">
+          <h3 class="baseRequestForm__question">Остались вопросы?</h3>
 
-        <div class="baseRequestForm__fields">
-          <BaseInput
-            v-model="name"
-            icon="profile"
-            autocomplete="name"
-            placeholder="Как к вам обращаться?"
-          />
-          <BaseInput
-            v-model="phone"
-            icon="phone"
-            type="tel"
-            autocomplete="tel"
-            inputmode="tel"
-            placeholder="+7 (999) 999-99-99"
-          />
-          <BaseTextArea
-            v-model="message"
-            placeholder="Напишите дополнительные пожелания"
-          />
-          <BaseAttachFiles @change="onFilesSelect" placeholder="Загрузите файл">
-            <template #hint>
-              Можем обсудить условия выполнения индивидуального заказа
-              (прикрепите чертёж к{{ NBSP }}заявке звонка)
-            </template>
-          </BaseAttachFiles>
+          <div class="baseRequestForm__fields">
+            <BaseInput
+              v-model="name"
+              icon="profile"
+              autocomplete="name"
+              placeholder="Как к вам обращаться?"
+            />
+            <BaseInput
+              v-model="phone"
+              icon="phone"
+              type="tel"
+              autocomplete="tel"
+              inputmode="tel"
+              placeholder="+7 (999) 999-99-99"
+            />
+            <BaseTextArea
+              v-model="message"
+              placeholder="Напишите дополнительные пожелания"
+            />
+            <BaseAttachFiles
+              @change="onFilesSelect"
+              placeholder="Загрузите файл"
+            >
+              <template #hint>
+                Можем обсудить условия выполнения индивидуального заказа
+                (прикрепите чертёж к{{ NBSP }}заявке звонка)
+              </template>
+            </BaseAttachFiles>
+          </div>
+
+          <BaseButton
+            :disabled="!isValid"
+            type="submit"
+            size="s"
+            class="baseRequestForm__submit"
+          >
+            Оставить заявку
+          </BaseButton>
+        </form>
+
+        <div class="baseRequestForm__successful">
+          <span>Остались вопросы?</span>
+          <div class="baseRequestForm__result">
+            <SvgoSuccessful filled class="baseRequestForm__icon" />
+            <span>
+              Спасибо за обращение! Мы свяжемся с вами в ближайшее время
+            </span>
+          </div>
         </div>
-
-        <BaseButton
-          :disabled="!isValid"
-          type="submit"
-          size="s"
-          class="baseRequestForm__submit"
-        >
-          Оставить заявку
-        </BaseButton>
-      </form>
+      </div>
     </div>
 
     <div class="baseRequestForm__additional">
@@ -97,10 +118,10 @@ const onSubmit = () => {
       <h2 class="baseRequestForm__title">Контакты</h2>
       <div class="baseRequestForm__contacts">
         <a :href="`tel:${CONSTANTS.phone}`" class="baseRequestForm__link">
-          <SvgoSimplePhone />
+          <SvgoSimplePhone filled />
         </a>
         <a :href="`mailto:${CONSTANTS.email}`" class="baseRequestForm__link">
-          <SvgoSimpleEmail />
+          <SvgoSimpleEmail filled />
         </a>
         <a
           :href="CONSTANTS.whatsapp"
@@ -108,7 +129,7 @@ const onSubmit = () => {
           rel="nofollow noreferrer noopener"
           class="baseRequestForm__link"
         >
-          <SvgoSimpleWhatsapp />
+          <SvgoSimpleWhatsapp filled />
         </a>
       </div>
     </div>
@@ -117,6 +138,8 @@ const onSubmit = () => {
 
 <style lang="scss" scoped>
 .baseRequestForm {
+  $self: &;
+
   position: relative;
   display: flex;
 
@@ -151,9 +174,10 @@ const onSubmit = () => {
     }
   }
 
-  &__form {
+  &__card {
     @include columns(4, 2);
 
+    position: relative;
     margin: 0 auto;
     background: rgba(243, 233, 233, 0.12);
     border: 2px solid #f2f2f2;
@@ -174,6 +198,10 @@ const onSubmit = () => {
       width: 100%;
       padding: 48px 12px;
     }
+  }
+
+  &__form {
+    transition: opacity 0.3s ease 0.3s;
   }
 
   &__question {
@@ -245,6 +273,51 @@ const onSubmit = () => {
       display: block;
       margin-bottom: 0;
       transition: transform 0.3s ease;
+    }
+  }
+
+  &__successful {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #111112;
+    font-size: 32px;
+    text-align: center;
+    padding: inherit;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+  }
+
+  &__result {
+    margin: auto 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__icon {
+    width: 145px;
+    height: 145px;
+    display: block;
+    margin-bottom: 94px;
+  }
+
+  &_success {
+    #{$self}__form {
+      transition-delay: 0s;
+      opacity: 0;
+    }
+
+    #{$self}__successful {
+      transition-delay: 0.3s;
+      opacity: 1;
+      pointer-events: initial;
     }
   }
 }

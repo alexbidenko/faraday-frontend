@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<Props>(), { size: 'm' });
   outline: none;
   font-size: 32px;
   cursor: pointer;
-  transition: color 0.3s ease, background-color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease;
 
   @include mq('xxl') {
     border-radius: 24px;
@@ -42,6 +42,13 @@ const props = withDefaults(defineProps<Props>(), { size: 'm' });
   &:hover {
     background-color: #f2f2f2;
     color: #111112;
+  }
+
+  &:disabled {
+    pointer-events: none;
+    border-color: #C8C8C8;
+    background-color: #C8C8C8;
+    color: #858A8C;
   }
 
   &_l {

@@ -52,6 +52,7 @@ const { data: articles } = await useAsyncData<ArticleType[]>('articles', () =>
 <style lang="scss">
 .articlesPage {
   padding-top: 86px;
+  padding-bottom: 94px;
   max-width: 1600px;
   margin: 0 auto;
 
@@ -115,6 +116,7 @@ const { data: articles } = await useAsyncData<ArticleType[]>('articles', () =>
     margin: 0;
     padding-bottom: 32px;
     border-bottom: 1px solid #858a8c;
+    flex: 1;
   }
 
   &__cardAction {

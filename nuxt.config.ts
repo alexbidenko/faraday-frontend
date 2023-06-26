@@ -35,6 +35,7 @@ export default defineNuxtConfig({
   typescript: {
     tsConfig: { compilerOptions: { moduleResolution: 'bundler' } },
   },
+  app: { pageTransition: { name: 'page', mode: 'out-in' } },
   hooks: {
     // https://github.com/nuxt/nuxt/issues/18376
     'build:manifest': (manifest: Manifest) => {

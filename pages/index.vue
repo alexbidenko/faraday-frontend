@@ -2,6 +2,7 @@
   <main>
     <SectionWelcome />
     <SectionAbout />
+    <SectionHardox />
     <SectionServices />
     <SectionForm />
   </main>
