@@ -65,10 +65,21 @@ onBeforeUnmount(() => {
           </NuxtLink>
         </div>
         <div class="layoutSideMenu__column">
-          <NuxtLink to="/" class="layoutSideMenu__link"> Статьи </NuxtLink>
-          <NuxtLink to="/" class="layoutSideMenu__link"> О HARDOX </NuxtLink>
-          <NuxtLink to="/" class="layoutSideMenu__link"> Марки стали </NuxtLink>
-          <NuxtLink to="/" class="layoutSideMenu__link"> Все услуги </NuxtLink>
+          <NuxtLink to="/articles" class="layoutSideMenu__link">
+            Статьи
+          </NuxtLink>
+          <NuxtLink to="/articles/hardox" class="layoutSideMenu__link">
+            О HARDOX
+          </NuxtLink>
+          <NuxtLink to="/articles/steel/09g2s" class="layoutSideMenu__link">
+            Марки стали
+          </NuxtLink>
+          <NuxtLink
+            to="/articles/services/laser-cutting"
+            class="layoutSideMenu__link"
+          >
+            Все услуги
+          </NuxtLink>
         </div>
       </div>
 
