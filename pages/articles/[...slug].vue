@@ -1,42 +1,87 @@
 <script lang="ts" setup>
-const route = useRoute();
+const unwrap = <T extends { children?: T[] }>(
+  list: T[]
+): Omit<T, 'children'>[] =>
+  list.reduce<Omit<T, 'children'>[]>(
+    (acc, { children, ...item }) => [
+      ...acc,
+      item,
+      ...(children ? unwrap(children) : []),
+    ],
+    []
+  );
 
-const [{ data: page, error }, { data: navigation }] = await Promise.all([
-  useAsyncData(route.path, () => queryContent<any>(route.path).findOne()),
-  useAsyncData(`${route.path}/navigation`, () =>
-    queryContent(
-      `/${route.path.split('/').filter(Boolean).slice(0, 2).join('/')}`
-    )
-      .only(['_path', 'title'])
-      .find()
-  ),
-]);
+const route = useRoute();
+const router = useRouter();
+
+const [{ data: page, error }, { data: navigation }, { data: breadcrumbs }] =
+  await Promise.all([
+    useAsyncData(() =>
+      queryContent<any>(route.path)
+        .where({
+          _extension: 'md',
+        })
+        .findOne()
+    ),
+    useAsyncData(() =>
+      queryContent(
+        `/${route.path.split('/').filter(Boolean).slice(0, 2).join('/')}`
+      )
+        .only(['_path', 'title'])
+        .find()
+        .then((r) => r.filter((el) => !/_dir$/.test(el._path)))
+    ),
+    useAsyncData(() =>
+      fetchContentNavigation({ limit: 1, where: [{ _path: route.path }] }).then(
+        unwrap
+      )
+    ),
+  ]);
 
 if (error.value) {
   throw createError({ statusCode: 404, statusMessage: 'Page Not Found' });
+}
+
+if (page.value._path !== route.path) {
+  await(process.client ? router.push : navigateTo)('/articles');
 }
 </script>
 
 <template>
   <main class="articlesSlugPage">
-    <h1 class="articlesSlugPage__title container">{{ page.title }}</h1>
-    <div class="articlesSlugPage__grid container">
-      <div class="articlesSlugPage__navigation">
-        <NuxtLink
-          v-for="item in navigation"
+    <template v-if="page">
+      <header class="articlesSlugPage__header container">
+        <NuxtLink to="/" class="articlesSlugPage__crumb">Главная</NuxtLink>
+        <span
+          v-for="item in breadcrumbs"
           :key="item._path"
-          :to="item._path"
-          class="articlesSlugPage__link"
+          class="articlesSlugPage__crumbWrapper"
         >
-          {{ item.title }}
-        </NuxtLink>
+          {{ NBSP }}—{{ NBSP }}
+          <NuxtLink :to="item._path" class="articlesSlugPage__crumb">
+            {{ item.title }}
+          </NuxtLink>
+        </span>
+      </header>
+      <h1 class="articlesSlugPage__title container">{{ page.title }}</h1>
+      <div class="articlesSlugPage__grid container">
+        <div class="articlesSlugPage__navigation">
+          <NuxtLink
+            v-for="item in navigation"
+            :key="item._path"
+            :to="item._path"
+            class="articlesSlugPage__link"
+          >
+            {{ item.title }}
+          </NuxtLink>
+        </div>
+        <ContentRendererMarkdown
+          :value="page"
+          class="articlesSlugPage__content"
+        />
+        <p class="articlesSlugPage__additional">{{ page.additional }}</p>
       </div>
-      <ContentRendererMarkdown
-        :value="page"
-        class="articlesSlugPage__content"
-      />
-      <p class="articlesSlugPage__additional">{{ page.additional }}</p>
-    </div>
+    </template>
   </main>
 </template>
 
@@ -44,6 +89,34 @@ if (error.value) {
 .articlesSlugPage {
   padding-top: 86px;
   padding-bottom: 94px;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    padding-bottom: 12px;
+    color: #111112;
+    font-size: 16px;
+    line-height: 26px;
+  }
+
+  &__crumb {
+    color: #111112;
+    text-decoration: none;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    &.router-link-exact-active {
+      color: #b76902;
+      opacity: 1;
+    }
+  }
+
+  &__crumbWrapper {
+    display: contents;
+  }
 
   &__title {
     color: #000;

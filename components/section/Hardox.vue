@@ -40,14 +40,14 @@
         <li class="sectionHardox__item">
           <h3 class="sectionHardox__itemTitle">Hardox 500</h3>
           <p class="sectionHardox__itemDescription">
-            Cталь, легко поддающаяся гибке и{{ NBSP }}сварке, при{{ NBSP }}этом
+            Сталь, легко поддающаяся гибке и{{ NBSP }}сварке, при{{ NBSP }}этом
             стойкая к{{ NBSP }}абразивному истиранию.
           </p>
         </li>
         <li class="sectionHardox__item">
           <h3 class="sectionHardox__itemTitle">Hardox 500{{ NBSP }}Tuf</h3>
           <p class="sectionHardox__itemDescription">
-            Bзносостойкую сталь Hardox нового поколения.
+            Износостойкую сталь Hardox нового поколения.
           </p>
         </li>
         <li class="sectionHardox__item">

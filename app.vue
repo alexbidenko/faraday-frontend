@@ -65,10 +65,14 @@ body {
 
 .page-enter-active,
 .page-leave-active {
-  transition: opacity 0.5s ease;
+  &:not(.articlesSlugPage) {
+    transition: opacity 0.5s ease;
+  }
 }
 .page-enter-from,
 .page-leave-to {
-  opacity: 0;
+  &:not(.articlesSlugPage) {
+    opacity: 0;
+  }
 }
 </style>
