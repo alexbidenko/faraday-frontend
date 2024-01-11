@@ -34,7 +34,7 @@ jobs:
             SMTP_PASSWORD=${{ secrets.SMTP_PASSWORD }}
             RECAPTCHA_SITE_KEY=${{ secrets.RECAPTCHA_SITE_KEY }}
           push: true
-          tags: ghcr.io/alexbidenko1998/faraday-frontend/application:latest
+          tags: ghcr.io/alexbidenko/faraday-frontend/application:latest
 
   build-nginx:
     runs-on: ubuntu-22.04
@@ -58,7 +58,7 @@ jobs:
         with:
           context: nginx
           push: true
-          tags: ghcr.io/alexbidenko1998/faraday-frontend/nginx:latest
+          tags: ghcr.io/alexbidenko/faraday-frontend/nginx:latest
 
   deploy:
     runs-on: ubuntu-22.04
