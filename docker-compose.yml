@@ -6,7 +6,7 @@ services:
     expose:
       - 4000
     volumes:
-      - nginx-cache:/data/nginx/cache
+      - nginx-cache:/data/nginx/cache/ipx
     networks:
       - server
       - internal
